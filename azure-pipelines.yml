@@ -39,8 +39,12 @@ stages:
           $(tag)
     - task: SonarQubePrepare@5
       inputs:
-        SonarQube: 'SonarQube Connection'
-        scannerMode: 'Other'
+        SonarQube: 'SonarCube Endpoint'
+        scannerMode: 'CLI'
+        configMode: 'manual'
+        cliProjectKey: 'VegaAbsolute'
+        cliProjectName: 'VegaAbsolute'
+        cliSources: '.'
     - task: SonarQubeAnalyze@5
     - task: SonarQubePublish@5
       inputs:
