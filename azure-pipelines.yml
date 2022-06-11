@@ -46,6 +46,8 @@ stages:
         cliProjectKey: 'VegaWeb'
         cliProjectName: 'VegaWeb'
         cliSources: '.'
+    - task: SonarQubeAnalyze@5
+      displayName: Run code analysis
     - task: SonarQubePublish@5
       inputs:
         pollingTimeoutSec: '300'
