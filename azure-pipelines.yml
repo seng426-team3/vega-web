@@ -4,6 +4,7 @@
 
 trigger:
 - main
+- develop
 
 resources:
 - repo: self
@@ -39,9 +40,12 @@ stages:
           $(tag)
     - task: SonarQubePrepare@5
       inputs:
-        SonarQube: 'SonarQube Connection'
-        scannerMode: 'Other'
-    - task: SonarQubeAnalyze@5
+        SonarQube: 'SonarCube Endpoint'
+        scannerMode: 'CLI'
+        configMode: 'manual'
+        cliProjectKey: 'VegaWeb'
+        cliProjectName: 'VegaWeb'
+        cliSources: '.'
     - task: SonarQubePublish@5
       inputs:
         pollingTimeoutSec: '300'
