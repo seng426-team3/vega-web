@@ -13,7 +13,7 @@ variables:
   # Container registry service connection established during pipeline creation
   dockerRegistryServiceConnection: 'b068b772-bb75-44a5-b143-6bd118d94773'
   imageRepository: 'vegawebgit'
-  containerRegistry: 'vegaweb.azurecr.io'
+  containerRegistry: 'vegaspring.azurecr.io'
   dockerfilePath: '$(Build.SourcesDirectory)/Dockerfile'
   tag: '$(Build.BuildId)'
 
