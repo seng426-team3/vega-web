@@ -39,6 +39,7 @@ stages:
         containerRegistry: $(dockerRegistryServiceConnection)
         tags: |
           $(tag)
+          latest
     - task: SonarQubePrepare@5
       inputs:
         SonarQube: 'SonarCube Endpoint'
