@@ -15,6 +15,6 @@ services:
     image: "venus/theswitch"
     network_mode: "host"
     environment:
-      VEGA_WEB_SERVER_URL: "http://localhost:8000"
+      VEGA_WEB_SERVER_URL: "https://seng426-team3-vega-web-backend.azurewebsites.net"
 
 
