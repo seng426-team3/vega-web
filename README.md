@@ -4,7 +4,7 @@ Frontend is written using React framework. To start the application use below co
 
 `npm start`
 
-This will deploy the applciation at 3000 port. 
+This will deploy the application at 3000 port. 
 
 ### Vega Web Server for front-end
 
@@ -22,7 +22,7 @@ To start the application, run below command in the terminal.
 
 `npm start`
 
-This will deploy the application at port 8000. The same configuration you can find in the file named "index.js" under the server folder. All the depedecies are declared in the package.json file. 
+This will deploy the application at port 8000. The same configuration you can find in the file named "index.js" under the server folder. All the dependencies are declared in the package.json file. 
 
 ## Type of users (for login) 
 - Public (can see only the public site)
