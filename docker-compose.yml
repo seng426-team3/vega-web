@@ -6,8 +6,9 @@ services:
       context: ./server
       dockerfile: ./Dockerfile
     image: "venus/quantum"
-    ports:
-      - "8000:8000"
+    network_mode: "host"
+    environment:
+      API_URL: "http://localhost:8080"
   frontend:
     build:
       context: ./
@@ -15,6 +16,6 @@ services:
     image: "venus/theswitch"
     network_mode: "host"
     environment:
-      VEGA_WEB_SERVER_URL: "https://seng426-team3-vega-web-backend.azurewebsites.net"
+      API_URL: "http://localhost:8000"
 
 
