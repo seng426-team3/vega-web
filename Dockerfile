@@ -5,7 +5,7 @@ LABEL description="This is the base docker image for the Venus application front
 
 WORKDIR /app
 
-COPY ["package.json", "package-lock.json", "./"]
+COPY ["package.json", "./"]
 
 RUN npm install --production
 

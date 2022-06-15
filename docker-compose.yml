@@ -13,7 +13,8 @@ services:
       context: ./
       dockerfile: ./Dockerfile
     image: "venus/theswitch"
-    ports:
-      - "3000:3000"
-    links:
-      - "backend:be"
+    network_mode: "host"
+    environment:
+      VEGA_WEB_SERVER_URL: "http://localhost:8000"
+
+
