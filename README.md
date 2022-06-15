@@ -6,6 +6,10 @@ Frontend is written using React framework. To start the application use below co
 
 This will deploy the applciation at 3000 port. 
 
+### Vega Web Server for front-end
+
+To configure the URL endpoint which vega web will use to communicate with the server, set the `VEGA_WEB_SERVER_URL` environment variable. For example, the `docker-compose.yml` file by default uses `http://localhost:8080` as we assume in development we run all the servers locally.
+
 ## Images
 
 All the images that are used in frontend applcation will be found under src/assets/images folder.
