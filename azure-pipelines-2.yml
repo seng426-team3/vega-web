@@ -22,6 +22,23 @@ variables:
   vmImageName: 'ubuntu-latest'
 
 stages:
+- stage: SonarQube
+  displayName: Run SonarQube Analysis
+  jobs:
+    - job: SonarQube
+      displayName: SonarQube Analysis
+      steps:
+      - task: SonarQubePrepare@5
+        inputs:
+          SonarQube: 'SonarCube Endpoint'
+          scannerMode: 'CLI'
+          configMode: 'manual'
+          cliProjectKey: 'VegaAbsolute'
+          cliProjectName: 'VegaAbsolute'
+          cliSources: '.'
+      - task: SonarQubePublish@5
+        inputs:
+          pollingTimeoutSec: '300'
 - stage: Build
   displayName: Build and push stage
   jobs:
