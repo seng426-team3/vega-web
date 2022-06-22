@@ -17,7 +17,9 @@ const VegaVault = (props) => {
 		page = 
 			<SimplePageLayout>
 				<p>Vega Vault Only Available to Registered Users</p>
-				<Button onClick={nextPath} size="sm">Login</Button>
+				<view style={{ paddingLeft: 20, width: 50}}>
+					<Button onClick={nextPath} size="sm">Login</Button>
+				</view>
 			</SimplePageLayout>;
 	} else {
 		page = 
