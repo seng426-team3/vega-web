@@ -16,7 +16,8 @@ const VegaVault = (props) => {
 	if (user.role != "ROLE_STAFF" || user.role != "ROLE_USER" || user.role != "ROLE_ADMIN") {
 		page = 
 			<SimplePageLayout>
-				<p>Vega Vault service is only available to registered Users. Login or create an account below!</p>
+				<h3>Vega Vault service is only available to registered Users</h3>
+				<p>Login or create an account below!</p>
 				<view style={{ paddingLeft: 20, width: 200}}>
 					<Button onClick={nextPath} size="sm">Login / Create Account</Button>
 				</view>
