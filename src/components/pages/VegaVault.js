@@ -7,7 +7,7 @@ import {withRouter} from 'react-router-dom'
 const VegaVault = (props) => {
 	const {user} = useContext(UserContext);
   	
-	const nextPath = () => {
+	const goToLogin = () => {
 		props.history.push("/login");
 	}
 
@@ -19,7 +19,7 @@ const VegaVault = (props) => {
 				<h3>Vega Vault service is only available to registered Users</h3>
 				<p>Login or create an account below!</p>
 				<view style={{ paddingLeft: 20, width: 200}}>
-					<Button onClick={nextPath} size="sm">Login / Create Account</Button>
+					<Button onClick={goToLogin} size="sm">Login / Create Account</Button>
 				</view>
 			</SimplePageLayout>;
 	} else {
