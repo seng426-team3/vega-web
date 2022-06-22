@@ -25,17 +25,17 @@ const VegaVault = (props) => {
 	} else {
 		page = 
 			<SimplePageLayout>
-			<Table>
-				<thead>
-					<tr>
-						<td>Name</td>
-						<td>Creation Date</td>
-						<td>Data</td>
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
-			</Table>
+				<Table>
+					<thead>
+						<tr>
+							<td>Name</td>
+							<td>Creation Date</td>
+							<td>Data</td>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</Table>
 			</SimplePageLayout>;
 	}
 
