@@ -6,14 +6,16 @@ services:
       context: ./server
       dockerfile: ./Dockerfile
     image: "venus/quantum"
-    ports:
-      - "8000:8000"
+    network_mode: "host"
+    environment:
+      API_URL: "http://localhost:8080"
   frontend:
     build:
       context: ./
       dockerfile: ./Dockerfile
     image: "venus/theswitch"
-    ports:
-      - "3000:3000"
-    links:
-      - "backend:be"
+    network_mode: "host"
+    environment:
+      API_URL: "http://localhost:8000"
+
+

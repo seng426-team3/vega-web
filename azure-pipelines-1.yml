@@ -1,0 +1,60 @@
+# Docker
+# Build and push an image to Azure Container Registry
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+
+trigger:
+- main
+- develop
+- feature/*
+
+resources:
+- repo: self
+
+variables:
+  # Container registry service connection established during pipeline creation
+  dockerRegistryServiceConnection: 'e094563e-0568-490c-a644-857e76b75e97'
+  imageRepository: 'sengteamvegawebbackend'
+  containerRegistry: 'vegaspring.azurecr.io'
+  dockerfilePath: '$(Build.SourcesDirectory)/server/Dockerfile'
+  tag: '$(Build.BuildId)'
+
+  # Agent VM image name
+  vmImageName: 'ubuntu-latest'
+
+stages:
+- stage: SonarQube
+  displayName: Run SonarQube Analysis
+  jobs:
+    - job: SonarQube
+      displayName: SonarQube Analysis
+      steps:
+      - task: SonarQubePrepare@5
+        inputs:
+          SonarQube: 'SonarCube Endpoint'
+          scannerMode: 'CLI'
+          configMode: 'manual'
+          cliProjectKey: 'VegaAbsolute'
+          cliProjectName: 'VegaAbsolute'
+          cliSources: '.'
+      - task: SonarQubePublish@5
+        inputs:
+          pollingTimeoutSec: '300'
+- stage: Build
+  displayName: Build and push stage
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - task: Docker@2
+      displayName: Build and push an image to container registry
+      inputs:
+        command: buildAndPush
+        repository: $(imageRepository)
+        dockerfile: $(dockerfilePath)
+        containerRegistry: $(dockerRegistryServiceConnection)
+        tags: |
+          $(tag)
+          latest

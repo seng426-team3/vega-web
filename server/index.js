@@ -16,7 +16,7 @@ app.use(express.json({limit: '50mb'}));
 
 if (process.env.NODE_ENV === 'development') {
   var corsOptions = {
-    origin: 'http://localhost:3000',
+    origin: '*',
     optionsSuccessStatus: 200
   };
   app.use(cors(corsOptions));
