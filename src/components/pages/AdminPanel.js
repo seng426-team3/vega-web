@@ -1,9 +1,11 @@
 import SimplePageLayout from '../templates/SimplePageLayout.js';
+import ListUsersAdminPanel from '../UI/molecules/ListUsersAdminPanel.js';
 import {fetchuser, enableAccount, changeAccountRole} from  '../../service/AdminPanel/AdminPanel.js';
 import {UserContext} from '../../auth/UserProvider.js';
 import {useState, useContext, useEffect} from 'react';
 
-import {Form, Button, Row, Col, Table} from 'react-bootstrap';
+import {Form, Button, Row, Col, Table, Alert} from 'react-bootstrap';
+import {Redirect} from "react-router-dom";
 
 const AdminPanel = (props) => {
 	const {user} = useContext(UserContext);
@@ -14,8 +16,6 @@ const AdminPanel = (props) => {
 				.then(resp => {
 					setUsers(resp)
 					});
-		
-
 	}, [user]);
 
 	const enableUser = (username) => {
@@ -48,23 +48,15 @@ const AdminPanel = (props) => {
 		}
 	}
 
-	return(
+	return (
 		<SimplePageLayout>
-			<Table>
-				<thead>
-					<tr>
-						<td>First Name</td>
-						<td>Last Name</td>
-						<td>Username</td>
-						<td></td>
-						<td></td>
-					</tr>
-				</thead>
-				<tbody>
-					{listOfUsersHTML()}
-				</tbody>
-			</Table>
+			{ user.role == "ROLE_ADMIN" ? (
+				<ListUsersAdminPanel users={listOfUsersHTML()}/>
+			) : (
+				<Alert variant="danger">You do not have permission to view this page.<Alert.Link href="/">Go to Home</Alert.Link></Alert>
+			)}
 		</SimplePageLayout>
-		)
+	);
 }
+
 export default AdminPanel;
