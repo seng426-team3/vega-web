@@ -5,7 +5,6 @@ import {UserContext} from '../../../auth/UserProvider.js';
 
 const VenusNavBar = (props) => {
   const {user} = useContext(UserContext);
-  console.log(user);
 	var logout;
   var resources;
   var adminpanel;
