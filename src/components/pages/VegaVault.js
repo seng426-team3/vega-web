@@ -13,7 +13,7 @@ const VegaVault = (props) => {
 
 	var page;
 	
-	if (user.role != "ROLE_STAFF" || user.role != "ROLE_USER" || user.role != "ROLE_ADMIN") {
+	if (user.role != "ROLE_STAFF" && user.role != "ROLE_USER" && user.role != "ROLE_ADMIN") {
 		page = 
 			<SimplePageLayout>
 				<h3>Vega Vault service is only available to registered Users</h3>
