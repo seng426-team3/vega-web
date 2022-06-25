@@ -1,6 +1,6 @@
 import bodyParser from 'body-parser';
 import express from 'express';
-import {fetchusers, enableAccount, changeRole} from '../services/AdminPanelAPI.js';
+import {fetchusers, enableAccount, disableAccount, changeRole} from '../services/AdminPanelAPI.js';
 import fileUpload from 'express-fileupload';
 
 let router = express();
@@ -21,7 +21,7 @@ router.get("/getusers", (req, res) => {
     .catch(error => {
     	console.log("ERROR:", error);
     	res.send(error);
-    })
+    });
 })
 
 router.get("/enableuser", (req, res) => {
@@ -36,8 +36,23 @@ router.get("/enableuser", (req, res) => {
     .catch(error => {
     	console.log("ERROR:", error);
     	res.send(error);
-    })
+    });
 })
+
+router.get("/disableuser", (req, res) => {
+	console.log("Request: Disable User");
+	const {username} = req.query;
+	const {disable} = req.query;
+	disableAccount(`${process.env.API_URL}/venus/admin/disableuser?username=${username}&disable=${disable}`, req.headers)
+	.then(response => {
+		console.log("Response", response);
+		res.send(response);
+	})
+	.catch(error => {
+		console.log("Error:", error);
+		res.send(error);
+	});
+});
 
 router.get("/changerole", (req, res) => {
 	console.log("Request: Change Role")
@@ -51,7 +66,7 @@ router.get("/changerole", (req, res) => {
 	.catch(error => {
 		console.log("ERROR:", error);
 		res.send(error)
-	})
+	});
 })
 
 export default router;

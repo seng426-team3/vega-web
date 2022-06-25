@@ -1,4 +1,4 @@
-import SimplePageLayout from "../../templates/SimplePageLayout.js";
+import SimplePageLayout from "../templates/SimplePageLayout.js";
 import {Container, Alert} from "react-bootstrap";
 import {Link} from "react-router-dom";
 
