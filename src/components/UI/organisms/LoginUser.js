@@ -20,13 +20,13 @@ const LoginUser = ({onSubmit}) => {
         		<Form onSubmit={submitForm}>
 	      			<Form.Group className="mb-3">
 	        			<Form.Label>USERNAME</Form.Label>
-	        			<Form.Control type="text" onChange={e => setUsername(e.target.value)}/>
+	        			<Form.Control type="text" id="login-form-username" onChange={e => setUsername(e.target.value)}/>
 	      			</Form.Group>
 	      			<Form.Group className="mb-3">
 	        			<Form.Label>PASSWORD</Form.Label>
-	        			<Form.Control type="PASSWORD" onChange={e => setPassword(e.target.value)}/>
+	        			<Form.Control type="PASSWORD" id="login-form-password" onChange={e => setPassword(e.target.value)}/>
 	      			</Form.Group>
-	      			<Button variant="primary" type="submit" onClick={submitForm}>
+	      			<Button id="login-form-submit-button" variant="primary" type="submit" onClick={submitForm}>
 	        			Submit
 	      			</Button>
     			</Form>
