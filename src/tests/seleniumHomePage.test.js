@@ -8,7 +8,7 @@ let driver;
 
 beforeAll(() => {
     driver = new webdriver.Builder().forBrowser(driverBrowser)
-    .setFirefoxOptions(new firefox.Options().headless().windowSize(screen)) // uncomment this line to run in browser locally
+    .setFirefoxOptions(new firefox.Options().headless().windowSize(screen)) // comment this line to run in browser locally
     .build();
 });
 
