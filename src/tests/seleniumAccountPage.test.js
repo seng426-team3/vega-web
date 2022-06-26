@@ -3,6 +3,7 @@ import { webdriver,
     reactAppURL,
     screen} from "./seleniumConfig";
 const firefox = require('selenium-webdriver/firefox');
+const {until} = require('selenium-webdriver');
 
 let driver;
 
@@ -26,10 +27,13 @@ describe("User must be able to view their account details", () => {
         await password_input_textbox.sendKeys('pass');
         await login_form_submit_btn.click();
 
-        await driver.findElement(webdriver.By.xpath("//a[@href='/account']")).click();
+        // Wait until account button is visible to know we are logged in.
+        let account_link = await driver.findElement(webdriver.By.xpath("//a[@href='/account']"));
+        await driver.wait(until.elementIsVisible(account_link), 15000);
+        await account_link.click()
 
         // Then
-        const logged_in_username = await driver.findElement(webdriver.By.xpath("//p[@id='username-text']")).getText();
+        let logged_in_username = await driver.findElement(webdriver.By.xpath("//p[@id='username-text']")).getText();
         await expect(logged_in_username).toEqual("admin@venus.com");
     });
 

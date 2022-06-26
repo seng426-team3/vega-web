@@ -11,6 +11,8 @@ const AdminPanel = (props) => {
 	const [listOfUsers, setUsers] = useState([]);
 	const [isUserEnabledAlert, setIsUserEnabledAlert] = useState(false);
 	const [isUserDisabledAlert, setIsUserDisabledAlert] = useState(false);
+	const [isUserRoleChangedAlert, setIsUserRoleChangedAlert] = useState(false);
+	const [unathorizedRoleChangeAlert, setUnauthorizedRoleChangeAlert] = useState(false);
 
 	useEffect(() => {
 			console.log("Inside useEffect")
@@ -26,7 +28,7 @@ const AdminPanel = (props) => {
 		.then(resp => 
 			console.log("User enabled"));
 		
-		// Update list of users so state change occurs
+		// Update state so alert visible
 		setIsUserEnabledAlert(true);
 	}
 
@@ -36,7 +38,7 @@ const AdminPanel = (props) => {
 		.then(resp =>
 			console.log("User disabled"));
 		
-		// Update list of users so state change occurs
+		// Update state so alert visible
 		setIsUserDisabledAlert(true);
 	}
 
@@ -44,29 +46,41 @@ const AdminPanel = (props) => {
 	const changeRole = (evt, username) => {
 		console.log(evt.target.value, username)
 		var role = evt.target.value
+
+		// Prevent user from changing their own role (e.g. admin setting themselves to staff/user)
+		if (user.username == username) {
+			setUnauthorizedRoleChangeAlert(true);
+			console.log("Unauthorized to change own role.");
+			return;
+		}
+
 		changeAccountRole(username, role, user.jwt)
 		.then(resp => 
-			console.log("Changed Roles"))
+			console.log("Changed Roles"));
+
+		// Update state so alert visible
+		setIsUserRoleChangedAlert(true);
 	}
 
 	const listOfUsersHTML = () => {
 		if(listOfUsers.length){
 			return listOfUsers.map((userInfoCollection) => 
-				<tr key={userInfoCollection.userInfo.username + "-entry"}>
-					<td key={userInfoCollection.userInfo.username + "-first-name"}>{userInfoCollection.userInfo.firstName}</td>
-					<td key={userInfoCollection.userInfo.username + "-last-name"}>{userInfoCollection.userInfo.lastName}</td>
-					<td key={userInfoCollection.userInfo.username + "-username"}>{userInfoCollection.userInfo.username}</td>
+				<tr id={userInfoCollection.userInfo.username + "-entry"} key={userInfoCollection.userInfo.username + "-entry"}>
+					<td id={userInfoCollection.userInfo.username + "-first-name"} key={userInfoCollection.userInfo.username + "-first-name"}>{userInfoCollection.userInfo.firstName}</td>
+					<td id={userInfoCollection.userInfo.username + "-last-name"} key={userInfoCollection.userInfo.username + "-last-name"} >{userInfoCollection.userInfo.lastName}</td>
+					<td id={userInfoCollection.userInfo.username + "-username"} key={userInfoCollection.userInfo.username + "-username"} >{userInfoCollection.userInfo.username}</td>
 					{userInfoCollection.enabled ? 
-						<td key={userInfoCollection.userInfo.username + "-disable"} onClick={() => disableUser(userInfoCollection.userInfo.username)}>
+						<td id={userInfoCollection.userInfo.username + "-disable"} key={userInfoCollection.userInfo.username + "-disable"} onClick={() => disableUser(userInfoCollection.userInfo.username)}>
 							<a href="#">Disable User</a>
 						</td>
 					: 
-						<td key={userInfoCollection.userInfo.username + "-enable"} onClick={() => enableUser(userInfoCollection.userInfo.username)}>
+						<td id={userInfoCollection.userInfo.username + "-enable"} key={userInfoCollection.userInfo.username + "-enable"} onClick={() => enableUser(userInfoCollection.userInfo.username)}>
 							<a href="#">Enable User</a>
 						</td>
 					}
-					<td key={userInfoCollection.userInfo.username + "-roles"}>
-						<Form.Select key={userInfoCollection.userInfo.username + "-roles-form-select"} aria-label="Floating label select example" onChange={(evt) => changeRole(evt, userInfoCollection.userInfo.username)}>
+					<td id={userInfoCollection.userInfo.username + "-role"} key={userInfoCollection.userInfo.username + "-role"}>{userInfoCollection.role}</td>
+					<td id={userInfoCollection.userInfo.username + "-change-roles"} key={userInfoCollection.userInfo.username + "-change-roles"}>
+						<Form.Select id={userInfoCollection.userInfo.username + "-roles-form-select"} key={userInfoCollection.userInfo.username + "-roles-form-select"} aria-label="Floating label select example" onChange={(evt) => changeRole(evt, userInfoCollection.userInfo.username)}>
 							<option>Change role</option>
 							<option value="ROLE_STAFF">STAFF</option>
 							<option value="ROLE_USER">USER</option>
@@ -79,7 +93,7 @@ const AdminPanel = (props) => {
 	return (
 		<SimplePageLayout>
 			{ isUserEnabledAlert &&
-				<Alert key="enabled-user-alert" variant="success">
+				<Alert id="enabled-user-alert" key="enabled-user-alert" variant="success">
 					User has been successfully enabled!
 					<hr/>
 					<div className="d-flex justify-content-end">
@@ -90,7 +104,7 @@ const AdminPanel = (props) => {
 				</Alert>
 			}
 			{ isUserDisabledAlert && 
-				<Alert key="disabled-user-alert" variant="success">
+				<Alert id="disabled-user-alert" key="disabled-user-alert" variant="success">
 					User has been successfully disabled!
 					<hr/>
 					<div className="d-flex justify-content-end">
@@ -100,11 +114,33 @@ const AdminPanel = (props) => {
 					</div>	
 				</Alert>			
 			}
+			{ unathorizedRoleChangeAlert &&
+				<Alert id="unauthorized-role-change-alert" key="unauthorized-role-change-alert" variant="danger">
+				Error: cannot change your own role.
+				<hr/>
+				<div className="d-flex justify-content-end">
+					<Button onClick={() => setUnauthorizedRoleChangeAlert(false)} variant="outline-danger">
+						Close
+					</Button>
+				</div>	
+			</Alert>
+			}
+			{ isUserRoleChangedAlert &&
+				<Alert id="user-role-changed-alert" key="unauthorized-role-change-alert" variant="success">
+				User role has been changed successfully.
+				<hr/>
+				<div className="d-flex justify-content-end">
+					<Button onClick={() => setIsUserRoleChangedAlert(false)} variant="outline-success">
+						Close
+					</Button>
+				</div>	
+			</Alert>
+			}
 
 			{ user.role == "ROLE_ADMIN" ? (
 				<ListUsersAdminPanel users={listOfUsersHTML()}/>
 			) : (
-				<Alert variant="danger">You do not have permission to view this page.<Alert.Link href="/">Go to Home</Alert.Link></Alert>
+				<Alert id="alert-not-authorized-admin-page" variant="danger">You do not have permission to view this page.<Alert.Link href="/">Go to Home</Alert.Link></Alert>
 			)}
 		</SimplePageLayout>
 	);
