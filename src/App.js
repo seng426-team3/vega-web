@@ -14,6 +14,7 @@ import AdminPanel from './components/pages/AdminPanel.js';
 import Leadership from './components/pages/Leadership.js';
 import UserRegistration from './components/pages/UserRegistration.js';
 import VegaVault from './components/pages/VegaVault';
+import SecretForm from './components/pages/SecretForm.js';
 import {UserProvider} from './auth/UserProvider.js';
 import {UserContext} from './auth/UserProvider.js';
 
@@ -37,6 +38,7 @@ function App() {
           <Route path="/resources" component={Resources} />
           <Route path="/adminpanel" component={AdminPanel} />
           <Route path="/vega-vault" component={VegaVault} />
+          <Route path="/secret-form" component={SecretForm} />
         </Switch>
     </UserProvider>
   );
