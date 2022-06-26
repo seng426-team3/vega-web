@@ -1,3 +1,4 @@
+import { until } from "selenium-webdriver";
 import { webdriver, 
     driverBrowser, 
     reactAppURL,
@@ -27,6 +28,11 @@ describe("User must be able to login into their account if one exists (user stor
         await login_form_submit_btn.click();
 
         await driver.get(reactAppURL + "account");
+
+        // Wait until signout button visible to know we are logged in
+        let signout_button = driver.findElement(webdriver.By.xpath("//button[text()='signout']"));
+        await driver.wait(until.elementIsVisible(signout_button), 15000);
+        
         const logged_in_username = await driver.findElement(webdriver.By.xpath("//p[@id='username-text']")).getText();
 
         // Then
@@ -47,7 +53,11 @@ describe("User must be able to login into their account if one exists (user stor
         await login_form_submit_btn.click();
 
         await driver.get(reactAppURL + "account");
-        await driver.findElement(webdriver.By.xpath("//button[text()='signout']")).click();
+
+        // Wait until signout button visible to know we are logged in
+        let signout_button = driver.findElement(webdriver.By.xpath("//button[text()='signout']"));
+        await driver.wait(until.elementIsVisible(signout_button), 15000);
+        await signout_button.click();
 
         // Then
         const login_signup_navbar_element_text = await driver.findElement(webdriver.By.xpath("//a[@href='/login']")).getText();
