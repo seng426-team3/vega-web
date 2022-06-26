@@ -17,8 +17,9 @@ import UserRegistration from './components/pages/UserRegistration.js';
 import VegaVault from './components/pages/VegaVault';
 import {UserProvider} from './auth/UserProvider.js';
 import {UserContext} from './auth/UserProvider.js';
-
 import UserAccount from './components/pages/UserAccount.js';
+import AboutUs from './components/pages/AboutUs.js';
+
 
 function App() {
   
@@ -38,6 +39,7 @@ function App() {
           <Route path="/resources" component={Resources} />
           <Route path="/adminpanel" component={AdminPanel} />
           <Route path="/vega-vault" component={VegaVault} />
+          <Route path="/aboutus" component={AboutUs}/>
           <Route path="/404" component={NotFound404Page} />
           <Redirect to="/404" />
         </Switch>
