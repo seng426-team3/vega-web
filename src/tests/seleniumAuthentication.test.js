@@ -6,7 +6,7 @@ const firefox = require('selenium-webdriver/firefox');
 
 let driver;
 
-beforeAll(() => {
+beforeEach(() => {
     driver = new webdriver.Builder().forBrowser(driverBrowser)
     .setFirefoxOptions(new firefox.Options().headless().windowSize(screen)) // comment this line to run in browser locally
     .build();
@@ -73,3 +73,7 @@ describe("User must be able to login into their account if one exists (user stor
         await expect(failed_login_alert).not.toBeNull();
     });
 });
+
+afterEach(async () => {
+    await driver.quit();
+}, 15000);

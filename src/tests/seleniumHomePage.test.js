@@ -6,7 +6,7 @@ const firefox = require('selenium-webdriver/firefox');
 
 let driver;
 
-beforeAll(() => {
+beforeEach(() => {
     driver = new webdriver.Builder().forBrowser(driverBrowser)
     .setFirefoxOptions(new firefox.Options().headless().windowSize(screen)) // comment this line to run in browser locally
     .build();
@@ -26,6 +26,6 @@ describe('Test home page functionality', () => {
     });
 });
 
-afterAll(async () => {
+afterEach(async () => {
     await driver.quit();
 }, 15000);
