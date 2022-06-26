@@ -2,10 +2,8 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {useContext} from 'react';
 import HomePageLayout from './components/templates/HomePageLayout.js';
-import NotFound404Page from './components/UI/organisms/NotFound404Page.js';
-import BlogPageLayout from './components/templates/BlogPageLayout.js';
+import NotFound404Page from './components/pages/NotFound404Page.js';
 import UserRegistrationPageLayout from './components/templates/UserRegistrationPageLayout.js'
-import SimplePageLayout from './components/templates/SimplePageLayout.js'
 import { Route, Switch, Redirect } from 'react-router-dom';
 import Platform from './components/pages/Platform.js';
 import Login from './components/pages/Login.js';
