@@ -43,6 +43,6 @@ describe("User must be able to view their account details", () => {
     });
 });
 
-afterAll(async () => {
+afterEach(async () => {
     await driver.quit();
 }, 15000);
