@@ -1,3 +1,4 @@
+import user from './auth/UserManager.js';
 import auth from './auth/AuthenticationManager.js';
 import fileUploader from './controller/FileUploadController.js';
 import adminPanel from './controller/AdminPanelController.js'
@@ -28,6 +29,7 @@ app.get('/', (req, res) => {
 
 
 app.use("/api/login", auth);
+app.use("/api/signup", user);
 app.use("/api/venus", fileUploader)
 app.use("/api/venus/admin", adminPanel)
 
