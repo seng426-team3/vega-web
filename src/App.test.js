@@ -70,7 +70,7 @@ describe("Test each publicly accessible page is reachable", () => {
     expect(username_input_label).toEqual('USERNAME');
   });
 
-  it("should access the signup page", async () => {
+  it("should access the sign up page", async () => {
     // Given
     await driver.get(reactAppURL + 'signup');
 
@@ -79,6 +79,17 @@ describe("Test each publicly accessible page is reachable", () => {
 
     // Then
     expect(create_account_title).toEqual('Create an account');
+  });
+
+  it("should access the about us page", async () => {
+    // Given
+    await driver.get(reactAppURL + 'aboutus');
+
+    // When
+    const username_input_label = await driver.findElement(webdriver.By.xpath("//h1[text()='Vega Absolute']")).getText();
+
+    // Then
+    expect(username_input_label).toEqual('Vega Absolute');
   });
 });
 

@@ -34,7 +34,7 @@ const VenusNavBar = (props) => {
         				<Nav.Link href="/news">News & Events</Nav.Link>
         				<Nav.Link href="/leadership">Leadership</Nav.Link>
         				{resources}
-        				<Nav.Link href="#pricing">About us</Nav.Link>
+        				<Nav.Link href="/aboutus">About us</Nav.Link>
         				<Nav.Link href="/contactus">Contact us</Nav.Link>
                 <Nav.Link href="/vega-vault">Vega Vault</Nav.Link>
                 {account}
