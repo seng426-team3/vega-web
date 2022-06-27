@@ -123,7 +123,7 @@ const AdminPanel = (props) => {
 						Close
 					</Button>
 				</div>	
-			</Alert>
+				</Alert>
 			}
 			{ isUserRoleChangedAlert &&
 				<Alert id="user-role-changed-alert" key="unauthorized-role-change-alert" variant="success">
