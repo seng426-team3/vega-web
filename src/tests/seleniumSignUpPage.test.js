@@ -18,7 +18,7 @@ beforeEach(() => {
 });
 
 describe("User must be able to sign up for an account from the login page and it show up in the admin page (user story 14 in RSD)", () => {
-    it("should allow user to create new account when all fields the form are filled in", async () => {
+    it("should allow user to create new account when all form fields filled in", async () => {
         // Given
         await driver.get(reactAppURL + "login");
 
@@ -41,11 +41,10 @@ describe("User must be able to sign up for an account from the login page and it
         await first_name_input_textbox.sendKeys('Test');
         await last_name_input_textbox.sendKeys('Testing');
         await password_input_textbox.sendKeys('pass');
-
         await sign_up_form_submit_btn.click();
         
         const account_created_alert_text = await driver.findElement(webdriver.By.xpath("//div[@id='sign-up-alert-success']")).getText();
-
+        
         // Then
         await expect(account_created_alert_text).not.toBeNull();
         await expect(account_created_alert_text).toEqual('You\'ve successfully registered for an account\nIt is currently under review. Please check back later to see if it is approved.');
@@ -69,7 +68,6 @@ describe("User must be able to sign up for an account from the login page and it
         await driver.wait(until.elementIsVisible(admin_link), 15000);
         await admin_link.click();
 
-        // Then
         const admin_panel_table = await driver.findElement(webdriver.By.xpath("//table[@id='admin-panel-table']"));
         await driver.wait(until.elementIsVisible(admin_panel_table), 15000);
         await expect(admin_panel_table).not.toBeNull();
@@ -78,6 +76,7 @@ describe("User must be able to sign up for an account from the login page and it
         await driver.wait(until.elementLocated(new_user_email_xpath), 15000);
         const new_user_email = await driver.findElement(new_user_email_xpath).getText();
 
+        // Then
         await expect(new_user_email).not.toBeNull();
         await expect(new_user_email).toEqual(email);
 
@@ -138,7 +137,7 @@ describe("User must be able to sign up for an account from the login page and it
         await password_input_textbox.sendKeys('pass');
         await sign_up_form_submit_btn.click();
         
-        let account_created_alert_text = await driver.findElement(webdriver.By.xpath("//div[@id='sign-up-alert-failure']")).getText();
+        const account_created_alert_text = await driver.findElement(webdriver.By.xpath("//div[@id='sign-up-alert-failure']")).getText();
 
         // Then
         await expect(account_created_alert_text).not.toBeNull();
