@@ -17,7 +17,7 @@ import {UserProvider} from './auth/UserProvider.js';
 import {UserContext} from './auth/UserProvider.js';
 import UserAccount from './components/pages/UserAccount.js';
 import AboutUs from './components/pages/AboutUs.js';
-
+import SignUp from './components/pages/SignUp.js';
 
 function App() {
   
@@ -32,7 +32,8 @@ function App() {
         	<Route path="/leadership" component={Leadership} exact />
         	<Route path="/news" component={NewsAndEvents} />
         	<Route path="/platform" component={Platform} />
-        	<Route path="/login" component={Login} />
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={SignUp} />
           <Route path="/account" component={UserAccount} />
           <Route path="/resources" component={Resources} />
           <Route path="/adminpanel" component={AdminPanel} />

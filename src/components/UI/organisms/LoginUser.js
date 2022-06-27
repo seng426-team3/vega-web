@@ -28,7 +28,8 @@ const LoginUser = ({onSubmit}) => {
 	      			</Form.Group>
 	      			<Button id="login-form-submit-button" variant="primary" type="submit" onClick={submitForm}>
 	        			Submit
-	      			</Button>
+							</Button>{' '}
+							<Button variant="outline-primary" href="/signup">Sign Up</Button> 
     			</Form>
       		</Col>
    	 	</Row>
