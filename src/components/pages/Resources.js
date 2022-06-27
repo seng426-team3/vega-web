@@ -109,10 +109,13 @@ const Resources = (props) => {
 					</div>	
 				</Alert>
 			}
-			{ user.role == "ROLE_ADMIN" &&
+			{ user.role == "ROLE_ADMIN" ? (
 				uploadHTML
+			) : (
+				<p id="cannot-upload-notice">You are not allowed to upload files as staff.</p>
+			)
 			}
-			{ user.username && 
+			{ (user.role == "ROLE_ADMIN" || user.role == "ROLE_STAFF") && 
 				<Row mt="5">
 					<Table id="resources-file-table">
 						<thead>
@@ -126,7 +129,7 @@ const Resources = (props) => {
 					</Table>
 				</Row>
 			}
-			{ user.username ? (
+			{ user.role == "ROLE_ADMIN" || user.role == "ROLE_STAFF" ? (
 				<Row>
 					<h3>Selected File Content</h3>
 					<Col>
