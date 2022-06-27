@@ -12,7 +12,6 @@ const GenerateHTMLForContent = () => {
         Our mission continues to thrive, with our state of the art AI technology disrupting the market place.
         With thousands of businesses powered by Vega Absolute, we are growing more than ever, enabling our customers to scale with us.
        </p>
-      
       <h4>Want to learn more?</h4>
       <Button variant="primary" href="/contactus">Contact Us</Button>
     </div>
