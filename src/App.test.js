@@ -69,6 +69,17 @@ describe("Test each publicly accessible page is reachable", () => {
     // Then
     expect(username_input_label).toEqual('USERNAME');
   });
+
+  it("should access the signup page", async () => {
+    // Given
+    await driver.get(reactAppURL + 'signup');
+
+    // When
+    const create_account_title = await driver.findElement(webdriver.By.xpath("//h2[text()='Create an account']")).getText();
+
+    // Then
+    expect(create_account_title).toEqual('Create an account');
+  });
 });
 
 afterAll(async () => {
