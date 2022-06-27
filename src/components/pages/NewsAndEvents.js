@@ -18,8 +18,12 @@ const NewsAndEvents = (props) => {
 			});
 	}, [user])
 
+	const submitNews = (event) => {
+		console.log("Submitting new news entry: ", event.target);
+	}
+
 	return (
-		<BlogPageLayout listOfNews={news} />
-		);
+		<BlogPageLayout listOfNews={news} submitEvent={submitNews} />
+	);
 }
 export default NewsAndEvents;
