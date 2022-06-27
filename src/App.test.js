@@ -69,6 +69,17 @@ describe("Test each publicly accessible page is reachable", () => {
     // Then
     expect(username_input_label).toEqual('USERNAME');
   });
+
+    it("should access the about us page", async () => {
+    // Given
+    await driver.get(reactAppURL + 'aboutus');
+
+    // When
+    const username_input_label = await driver.findElement(webdriver.By.xpath("//h1[text()='Vega Absolute']")).getText();
+
+    // Then
+    expect(username_input_label).toEqual('Vega Absolute');
+  });
 });
 
 afterAll(async () => {
