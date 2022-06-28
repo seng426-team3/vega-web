@@ -1,3 +1,4 @@
+import user from './auth/UserManager.js';
 import auth from './auth/AuthenticationManager.js';
 import fileUploader from './controller/FileUploadController.js';
 import adminPanel from './controller/AdminPanelController.js'
@@ -10,7 +11,7 @@ const app = express();
 const port = 8000;
 const env = config();
 
-//app.use(bodyParser.json());
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json({limit: '50mb'}));
 
@@ -28,6 +29,7 @@ app.get('/', (req, res) => {
 
 
 app.use("/api/login", auth);
+app.use("/api/signup", user);
 app.use("/api/venus", fileUploader)
 app.use("/api/venus/admin", adminPanel)
 
