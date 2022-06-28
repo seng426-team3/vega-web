@@ -18,17 +18,17 @@ export function createsecret(file, token, secretname){
     formData.append("token", token);
     formData.append("secretname", secretname);
 
-	return doPostFile(process.env.REACT_APP_API_URL + "/api/venus/createsecret", formData);
+	return doPostFile(process.env.REACT_APP_API_URL + "/api/venus/createsecret", formData, token);
 }
 
-export function readsecret(secretid){
+export function readsecret(secretid, token){
     let formData = new FormData;
     formData.append("secretid", secretid);
 
-	return doPostFile(process.env.REACT_APP_API_URL + "/api/venus/readsecret", formData);
+	return doPostFile(process.env.REACT_APP_API_URL + "/api/venus/readsecret", formData, token);
 }
 
-export function updatesecret(secretid, secretname, file){
+export function updatesecret(secretid, secretname, file, token){
     let formData = new FormData;
     formData.append("secretid", secretid);
 
@@ -39,12 +39,12 @@ export function updatesecret(secretid, secretname, file){
         formData.append("secretname", secretname);
     }
 
-	return doPostFile(process.env.REACT_APP_API_URL + "/api/venus/updatesecret", formData);
+	return doPostFile(process.env.REACT_APP_API_URL + "/api/venus/updatesecret", formData, token);
 }
 
-export function deletesecret(secretid){
+export function deletesecret(secretid, token){
     let formData = new FormData;
     formData.append("secretid", secretid);
 
-	return doPostFile(process.env.REACT_APP_API_URL + "/api/venus/deletesecret", formData);
+	return doPostFile(process.env.REACT_APP_API_URL + "/api/venus/deletesecret", formData, token);
 }
