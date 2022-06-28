@@ -10,7 +10,7 @@ router.use(fileUpload({
 
 router.post("/fetchsecrets", (req, res) => {
 	console.log("Request: User secrets");
-	fetchSecrets(process.env.API_URL + "/venus/vault/fetchsecrets", req.body, req.headers)
+	fetchSecrets(process.env.API_URL + "/venus/vault/fetchsecrets", req.body.formData, req.headers)
 	.then(response => {
     	console.log("Response", response);
     	res.send(response);
@@ -36,7 +36,7 @@ router.get("/fetchallsecrets", (req, res) => {
 
 router.post("/createsecret", (req, res) => {
 	console.log("Request: Create secret");
-	createSecret(`${process.env.API_URL}/venus/vault/createsecret`, req.body, req.headers)
+	createSecret(`${process.env.API_URL}/venus/vault/createsecret`, req.body.formData, req.headers)
 	.then(response => {
 		console.log("Response", response);
 		res.send(response);
@@ -49,7 +49,7 @@ router.post("/createsecret", (req, res) => {
 
 router.post("/readsecret", (req, res) => {
 	console.log("Request: Read secret")
-	readSecret(`${process.env.API_URL}/venus/vault/readsecret`, req.body, req.headers)
+	readSecret(`${process.env.API_URL}/venus/vault/readsecret`, req.body.formData, req.headers)
 	.then(response => {
 		console.log("Response", response);
 		res.send(response);
@@ -62,7 +62,7 @@ router.post("/readsecret", (req, res) => {
 
 router.post("/secretupdate", (req, res) => {
 	console.log("Request: Update secret")
-	updateSecret(`${process.env.API_URL}/venus/vault/secretupdate`, req.body, req.headers)
+	updateSecret(`${process.env.API_URL}/venus/vault/secretupdate`, req.body.formData, req.headers)
 	.then(response => {
 		console.log("Response", response);
 		res.send(response);
@@ -75,7 +75,7 @@ router.post("/secretupdate", (req, res) => {
 
 router.post("/deletesecret", (req, res) => {
 	console.log("Request: Delete secret")
-	deleteSecret(`${process.env.API_URL}/venus/vault/deletesecret`, req.body, req.headers)
+	deleteSecret(`${process.env.API_URL}/venus/vault/deletesecret`, req.body.formData, req.headers)
 	.then(response => {
 		console.log("Response", response);
 		res.send(response);
