@@ -23,7 +23,7 @@ router.post("/fetchsecrets", (req, res) => {
 
 router.post("/fetchallsecrets", (req, res) => {
 	console.log("Request: All secrets");
-	fetchAllSecrets(`${process.env.API_URL}/venus/admin/fetchallsecrets`, req.body, req.headers)
+	fetchAllSecrets(`${process.env.API_URL}/venus/admin/fetchallsecrets`, req.headers)
 	.then(response => {
     	console.log("Response", response);
     	res.send(response);
@@ -36,7 +36,7 @@ router.post("/fetchallsecrets", (req, res) => {
 
 router.post("/createsecret", (req, res) => {
 	console.log("Request: Create secret");
-	createSecret(`${process.env.API_URL}/venus/vault/createsecret`, req.body, req.files, req.headers)
+	createSecret(`${process.env.API_URL}/venus/vault/createsecret`, req.body, req.headers)
 	.then(response => {
 		console.log("Response", response);
 		res.send(response);
@@ -62,7 +62,7 @@ router.post("/readsecret", (req, res) => {
 
 router.post("/secretupdate", (req, res) => {
 	console.log("Request: Update secret")
-	updateSecret(`${process.env.API_URL}/venus/vault/secretupdate`, req.body, req.files, req.headers)
+	updateSecret(`${process.env.API_URL}/venus/vault/secretupdate`, req.body, req.headers)
 	.then(response => {
 		console.log("Response", response);
 		res.send(response);
