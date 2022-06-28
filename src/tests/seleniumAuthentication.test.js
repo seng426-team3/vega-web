@@ -30,12 +30,9 @@ describe("User must be able to login into their account if one exists (user stor
 
         await driver.get(reactAppURL + "account");
 
-        // Wait until signout button visible to know we are logged in
-        const signout_button = await getElementByXpath(driver, "//button[text()='signout']");
+        // Then
         const logged_in_username = await getElementByXpath(driver, "//p[@id='username-text']");
         const logged_in_username_text = await logged_in_username.getText();
-
-        // Then
         await expect(logged_in_username_text).toEqual("admin@venus.com");
     });
 
@@ -48,19 +45,16 @@ describe("User must be able to login into their account if one exists (user stor
         const password_input_textbox = await getElementByXpath(driver, "//input[@id='login-form-password']");
         const login_form_submit_btn = await getElementByXpath(driver, "//button[@id='login-form-submit-button']");;
         
-        await username_input_textbox.sendKeys('angelinacosta@venus.com');
+        await username_input_textbox.sendKeys('jonoliver@venus.com');
         await password_input_textbox.sendKeys('pass');
         await login_form_submit_btn.click();
 
         await driver.get(reactAppURL + "account");
 
-        // Wait until signout button visible to know we are logged in
-        const signout_button = await getElementByXpath(driver, "//button[text()='signout']");
+        // Then
         const logged_in_username = await getElementByXpath(driver, "//p[@id='username-text']");
         const logged_in_username_text = await logged_in_username.getText();
-
-        // Then
-        await expect(logged_in_username_text).toEqual("angelinacosta@venus.com");
+        await expect(logged_in_username_text).toEqual("jonoliver@venus.com");
     });
 
     it("should login when user username and password are correct", async () => {
@@ -78,12 +72,9 @@ describe("User must be able to login into their account if one exists (user stor
 
         await driver.get(reactAppURL + "account");
 
-        // Wait until signout button visible to know we are logged in
-        const signout_button = await getElementByXpath(driver, "//button[text()='signout']");
+        // Then
         const logged_in_username = await getElementByXpath(driver, "//p[@id='username-text']");
         const logged_in_username_text = await logged_in_username.getText();
-
-        // Then
         await expect(logged_in_username_text).toEqual("testuser2@venus.com");
     });
 
