@@ -18,6 +18,7 @@ import {UserContext} from './auth/UserProvider.js';
 import UserAccount from './components/pages/UserAccount.js';
 import AboutUs from './components/pages/AboutUs.js';
 import SignUp from './components/pages/SignUp.js';
+import ContactUs from './components/pages/ContactUs.js';
 
 function App() {
   
@@ -28,7 +29,7 @@ function App() {
    <UserProvider value ={user, setUserInfo, logout}> 
         <Switch>
         	<Route path="/" component={HomePageLayout} exact />
-        	<Route path="/contactus" component={UserRegistration} exact />
+        	<Route path="/contactus" component={ContactUs} exact />
         	<Route path="/leadership" component={Leadership} exact />
         	<Route path="/news" component={NewsAndEvents} />
         	<Route path="/platform" component={Platform} />
