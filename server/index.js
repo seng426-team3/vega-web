@@ -30,7 +30,7 @@ app.get('/', (req, res) => {
 
 app.use("/api/login", auth);
 app.use("/api/venus", fileUploader)
-app.use("/api/venus", news)
+app.use("/api/venus/news", news)
 app.use("/api/venus/admin", adminPanel)
 
 app.listen(port, () => {

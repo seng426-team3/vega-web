@@ -23,7 +23,7 @@ router.post("/upload", (req,res) => {
     		.catch(error => {
     			console.log("ERROR:", error);
     			res.send(error);
-    		})
+    		});
 })
 
 router.get("/listfiles", (req, res) => {

@@ -1,7 +1,7 @@
 import BlogPageLayout from '../templates/BlogPageLayout.js';
 import { useEffect, useState, useContext } from 'react';
 import { UserContext } from '../../auth/UserProvider.js';
-import { fetchNews } from '../../service/News/News.js';
+import { addNews, fetchNews } from '../../service/News/News.js';
 
 const NewsAndEvents = (props) => {
 	const {user} = useContext(UserContext);
@@ -16,10 +16,20 @@ const NewsAndEvents = (props) => {
 				setDataLoaded(true);
 				setNews(resp);
 			});
-	}, [user])
+	}, [user]);
 
 	const submitNews = (event) => {
-		console.log("Submitting new news entry: ", event.target);
+		console.log(event);
+		const newsObject = event.target;
+		const formData = new FormData();
+		formData.append("file", newsObject);
+
+		console.log(formData);
+
+		addNews(formData, user.jwt)
+			.then(res => {
+				console.log("Response:", res);
+			});
 	}
 
 	return (

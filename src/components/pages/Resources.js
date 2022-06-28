@@ -35,21 +35,18 @@ const Resources = (props) => {
 
 	const handleSubmission = () => {
 		const formData = new FormData();
-		console.log("SELECTED FILE");
-		console.log(selectedFile);
 		formData.append("file", selectedFile);
+
 		fileUploader(formData, user.jwt)
 			.then(res => {
 				console.log("Response", res);
-
 				if (res == "File uploaded Successfully") {
 					setIsFileUploadSuccessfulAert(true);
 					return;
 				}
 				setIsFileUploadFailedAlert(true);
 			})
-
-	}
+	};
 
 	const fetchFileData = (name) => {
 		console.log(user.jwt)
@@ -57,7 +54,7 @@ const Resources = (props) => {
 			.then(res => {
 				setContent(res);
 			})
-	}
+	};
 
 	const tableOfFilesHTML = () => {
 		if(listOfFiles.length) {

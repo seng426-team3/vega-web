@@ -13,7 +13,8 @@ const BlogPageLayout = ({listOfNews, submitEvent}) => {
 			<Row>
 				<Header />
 				{ (user.role == "ROLE_ADMIN" || user.role == "ROLE_STAFF") &&
-					<Form onSubmit={submitEvent}>
+					<div>
+						<h2>Submit new News Article</h2>
 						<Form.Group classname="mb-3" controlId="submitNewsTitle">
 							<Form.Label>Article Title</Form.Label>
 							<Form.Control type="text" placeholder="Enter title"></Form.Control>
@@ -27,10 +28,10 @@ const BlogPageLayout = ({listOfNews, submitEvent}) => {
 							<Form.Control as="textarea" rows={10}/>
 						</Form.Group>
 
-						<Button variant="primary" type="submit">
+						<Button variant="primary" type="submit" onClick={submitEvent}>
 							Submit
 						</Button>
-					</Form>
+					</div>
 				}
 				<ListNewsDetails listOfNews={listOfNews}/>
 			</Row>

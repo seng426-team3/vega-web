@@ -5,7 +5,6 @@ const ListNewsDetails = ({listOfNews}) => {
 	
 	console.log(listOfNews);
 	if (listOfNews.length) {
-		console.log("hello!");
 		generateHTMLForListOfNews = listOfNews.map((news) => <NewsDetails news={news} />);
 	}
 	return (
