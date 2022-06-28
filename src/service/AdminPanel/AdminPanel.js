@@ -1,4 +1,4 @@
-import {doPostFile, doGet} from '../BaseAPI.js';
+import {doGet} from '../BaseAPI.js';
 
 export function fetchuser(token){
 	return doGet(process.env.REACT_APP_API_URL + "/api/venus/admin/getusers", token);
