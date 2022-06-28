@@ -21,7 +21,7 @@ router.post("/fetchsecrets", (req, res) => {
     });
 })
 
-router.post("/fetchallsecrets", (req, res) => {
+router.get("/fetchallsecrets", (req, res) => {
 	console.log("Request: All secrets");
 	fetchAllSecrets(`${process.env.API_URL}/venus/admin/fetchallsecrets`, req.headers)
 	.then(response => {
