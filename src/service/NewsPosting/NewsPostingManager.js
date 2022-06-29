@@ -11,3 +11,7 @@ export function addNews(news, token) {
 export function deleteNews(news, token) {
     return doPost2(process.env.REACT_APP_API_URL + "/api/venus/news/deletenews", news, token);
 }
+
+export function editNews(news, token) {
+    return doPost2(process.env.REACT_APP_API_URL + "/api/venus/news/editnews", news, token);
+}
