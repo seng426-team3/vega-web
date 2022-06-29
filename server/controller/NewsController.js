@@ -17,7 +17,7 @@ router.get("/fetchnews", (req, res) => {
 });
 
 router.post("/addnews", (req, res) => {
-    var formData = req.files;
+    var formData = req.body;
     console.log("Entered add news");
     console.log(req);
     addNews(process.env.API_URL + "/venus/news/addnews", formData, req.headers)

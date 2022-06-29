@@ -1,6 +1,14 @@
+import {Container, Row} from 'react-bootstrap';
+import Header from '../UI/organisms/Header.js';
+import Footer from '../UI/organisms/Footer.js';
+import {useState, useContext, useEffect} from 'react';
+import ListNewsDetails from '../UI/organisms/ListNewsDetails.js';
 import BlogPageLayout from '../templates/BlogPageLayout.js';
+import {fetchNews} from '../../service/NewsPosting/NewsPostingManager.js';
+import {UserContext} from '../../auth/UserProvider.js';
+
 const NewsAndEvents = (props) => {
-	const listOfNews = [
+	/*const listOfNews = [
 		{	
 			"date" : "9.8.21",
 			"h1": "IG Design Group Selects Vega NextGen for Cybersecurity",
@@ -54,9 +62,23 @@ const NewsAndEvents = (props) => {
 			]
 		}
 	]
+	*/
+
+	const {user} = useContext(UserContext);
+	const [news, setNews] = useState([]);
+
+	useEffect(() => {
+		console.log("JWT is", user.jwt);
+		console.log("Inside useEffect");
+		fetchNews(user.jwt)
+			.then(resp => {
+				setNews(resp);
+				console.log(resp);
+			});
+	}, [user]);
 
 	return (
-		<BlogPageLayout listOfNews={listOfNews} />
+		<BlogPageLayout listOfNews={news} />
 		);
 }
 export default NewsAndEvents;
