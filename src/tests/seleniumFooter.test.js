@@ -7,6 +7,10 @@ const firefox = require('selenium-webdriver/firefox');
 
 let driver;
 
+/*
+    The selenium tests here are described as new user stories in the milestone 3 report.
+    Feature: Visitor should navigate to the appropriate location on Vega Absolute by following footer links
+*/
 describe('Test footer functionality', () => {
   beforeEach(() => {
       driver = new webdriver.Builder().forBrowser(driverBrowser)
@@ -14,6 +18,13 @@ describe('Test footer functionality', () => {
       .build();
   });
 
+  /* The following user story is covered by the cases below
+    Scenario (US-2-35): Visitor should navigate to the appropriate location on Vega Absolute by following footer links
+        Given I am a visitor, logged in or not
+        And I am on any page of Vega Absolute
+        When I click a clickable link in the footer of the application
+        Then I am redirected to the specified page of Vega Absolute
+  */
   it("should be able to navigate to platform page through the footer", async () => {
     // Given
     await driver.get(reactAppURL);
