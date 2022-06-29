@@ -5,8 +5,9 @@ import Footer from '../UI/organisms/Footer.js';
 import ListNewsDetails from '../UI/organisms/ListNewsDetails.js'
 import {addNews} from '../../service/NewsPosting/NewsPostingManager.js';
 import {UserContext} from '../../auth/UserProvider.js';
+import {fetchNews} from '../../service/NewsPosting/NewsPostingManager.js';
 
-const BlogPageLayout = ({listOfNews}) => {
+const BlogPageLayout = ({listOfNews, setNews}) => {
 	const [show, setShow] = useState(false);
 	const [title, setTitle]  = useState('');
 	const [author, setAuthor] = useState('');
@@ -35,6 +36,10 @@ const BlogPageLayout = ({listOfNews}) => {
 		addNews(data, user.jwt)
 			.then(res => {
 				console.log("Response:", res);
+				fetchNews(user.jwt)
+					.then(resp => {
+						setNews(resp);
+					});
 			});
 	}
 
