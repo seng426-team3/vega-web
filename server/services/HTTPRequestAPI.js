@@ -49,6 +49,7 @@ function  createRequestOptions(method, data, token){
   }
   if(data){
     requestOptions.body = JSON.stringify(data);
+    console.log(requestOptions.body);
   }
   return requestOptions;
 }

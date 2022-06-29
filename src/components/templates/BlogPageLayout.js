@@ -25,6 +25,7 @@ const BlogPageLayout = ({listOfNews}) => {
 		setShow(false);
 		let date = new Date();
 		const data = {
+			'newsid': 50,
 			'title': title,
 			'bodytext': body,
 			'newsdate': date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear(),
