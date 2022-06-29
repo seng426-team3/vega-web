@@ -8,9 +8,9 @@ router.use(fileUpload({
   limits: { fileSize: 50 * 1024 * 1024 },
 }));
 
-router.post("/fetchsecrets", (req, res) => {
+router.get("/fetchsecrets", (req, res) => {
 	console.log("Request: User secrets");
-	fetchSecrets(process.env.API_URL + "/venus/vault/fetchsecrets", req.body.formData, req.headers)
+	fetchSecrets(process.env.API_URL + "/venus/vault/fetchsecrets", req.headers)
 	.then(response => {
     	console.log("Response", response);
     	res.send(response);
@@ -36,7 +36,8 @@ router.get("/fetchallsecrets", (req, res) => {
 
 router.post("/createsecret", (req, res) => {
 	console.log("Request: Create secret");
-	createSecret(`${process.env.API_URL}/venus/vault/createsecret`, req.body.formData, req.headers)
+	var formData = req.files;
+	createSecret(`${process.env.API_URL}/venus/vault/createsecret`, formData, req.headers)
 	.then(response => {
 		console.log("Response", response);
 		res.send(response);

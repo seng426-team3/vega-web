@@ -1,27 +1,23 @@
-import {doPost} from './HTTPRequestAPI.js';
+import {doPost, doGet, doPostFile} from './HTTPRequestAPI.js';
 
-export function fetchSecrets(url, data, headers){
+export function fetchSecrets(url, headers){
 	console.log(headers);
-
-    requestOptions = createRequestOptions(headers, data);
-
-	return doPost(url, requestOptions);
+	return doGet(url, headers['authorization']);
 }
 
 export function fetchAllSecrets(url, headers){
 	console.log(headers);
 	console.log(url);
-
-	return doPost(url, headers['autorization']);
+	return doGet(url, headers['authorization']);
 }
 
 export function createSecret(url, data, headers){
-	console.log(headers);
-	console.log(url);
+	//console.log(headers);
+	//console.log(url);
 
-    requestOptions = createRequestOptions(headers, data);
-
-	return doPost(url, requestOptions);
+    //requestOptions = createRequestOptions(headers, data);
+	return doPostFile(url, data, headers);
+	//return doPost(url, requestOptions);
 }
 
 export function readSecret(url, data, headers){
