@@ -50,7 +50,25 @@ describe("User must be able to sign up for an account from the login page and it
         await expect(account_created_alert_text).toEqual('You\'ve successfully registered for an account\nIt is currently under review. Please check back later to see if it is approved.');
     });
 
-    it("should allow admin to access the admin page and activate the new user", async () => {
+     it("should show warning and fail when invalid user tries to login", async () => {
+        // Given
+        await driver.get(reactAppURL + "login");
+
+        // When
+        const username_input_textbox = await getElementByXpath(driver, "//input[@id='login-form-username']");
+        const password_input_textbox = await getElementByXpath(driver, "//input[@id='login-form-password']");
+        const login_form_submit_btn = await getElementByXpath(driver, "//button[@id='login-form-submit-button']");
+
+        await username_input_textbox.sendKeys(email);
+        await password_input_textbox.sendKeys('pass');
+        await login_form_submit_btn.click();
+
+        // Then
+        const failed_login_alert = await getElementByXpath(driver, "//div[@id='invalid-user-alert']");
+        await expect(failed_login_alert).not.toBeNull();
+    });
+
+    it("should allow admin to access the admin page and enable the new user", async () => {
         // Given
         await driver.get(reactAppURL + "login");
 

@@ -6,13 +6,15 @@ import {login} from '../../service/auth/AuthenticationManager.js';
 import {UserContext} from '../../auth/UserProvider.js';
 import  { Redirect } from 'react-router-dom'
 
-import {Alert, Button} from 'react-bootstrap';
+import {Alert, Button, Row, Col} from 'react-bootstrap';
 
 const Login = (props) => {
 	
 	const {user, setUserInfo} = useContext(UserContext);
 	const [auth, setAuth] = useState(false);
 	const [unsuccessfulLogin, setUnsuccessfulLogin] = useState(false);
+	const [invalidUser, setInvalidUser] = useState(false);
+
 
 	console.log("Userinfo", user);
 	function onSubmit(userInfo){
@@ -22,6 +24,9 @@ const Login = (props) => {
 
 				if (res.message === "Unauthorized") {
 					setUnsuccessfulLogin(true);
+					return;
+				} else if (res.message === "Forbidden") {
+					setInvalidUser(true);
 					return;
 				}
 
@@ -35,6 +40,8 @@ const Login = (props) => {
 		if(!auth){
 			return (
 				<UserRegistrationPageLayout>
+					<Row>
+      		<Col className="mx-auto" xs={6}>
 					{ unsuccessfulLogin && 
 						<Alert id="failed-login-alert" key="failed-login-alert" variant="danger">
 							Invalid username and/or password, failed to login...
@@ -46,6 +53,19 @@ const Login = (props) => {
 							</div>	
 						</Alert>						
 					}
+					{ invalidUser && 
+						<Alert id="invalid-user-alert" key="invalid-user-alert" variant="warning">
+							User account is still under review. Please try again later.
+							<hr/>
+							<div className="d-flex justify-content-end">
+								<Button onClick={() => setInvalidUser(false)} variant="outline-warning">
+									Close
+								</Button>
+							</div>	
+						</Alert>						
+							}
+						</Col>
+						</Row>
 					<LoginUser onSubmit={onSubmit}/>
 				</UserRegistrationPageLayout>
 			);
