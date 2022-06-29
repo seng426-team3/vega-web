@@ -30,6 +30,7 @@ const BlogPageLayout = ({listOfNews}) => {
 			'bodytext': body,
 			'newsdate': date.getDate() + '.' + date.getMonth() + '.' + date.getFullYear(),
 			'author': author,
+			'timepublished': Math.floor(Date.now() / 1000)
 		}
 
 		addNews(data, user.jwt)
