@@ -14,6 +14,7 @@ describe('Test home page functionality', () => {
         .build();
     });
 
+    /* This test is related to user story 1 in RSD, referred to being able to access public pages of Vega Absolute */
     it("should return a 200 OK response when visiting the home page containing the logo", async () => {
         // Given
         await driver.get(reactAppURL);
