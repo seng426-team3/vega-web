@@ -26,6 +26,20 @@ describe('Test home page functionality', () => {
         expect(logo_element_src).toEqual(reactAppURL + 'static/media/logo.738272f3.png');
     });
 
+     it("should redirect to the home page when clicking on the logo", async () => {
+        // Given
+        await driver.get(reactAppURL + "platform");
+        
+        // When
+        const logo_element = await getElementByXpath(driver, "//embed[@src='/static/media/logo.738272f3.png']");
+        logo_element.click()
+        
+        const home_page_carousel = await getElementByXpath(driver, "//div[@class='carousel-inner']");
+
+        // Then
+        expect(home_page_carousel).not.toBeNull();
+    });
+
     afterEach(async () => {
         await driver.quit();
     }, 15000);
