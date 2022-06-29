@@ -6,6 +6,7 @@ import express from 'express';
 import { config } from 'dotenv';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import news from './controller/NewsController.js';
 
 const app = express();
 const port = 8000;
@@ -31,6 +32,7 @@ app.get('/', (req, res) => {
 app.use("/api/login", auth);
 app.use("/api/signup", user);
 app.use("/api/venus", fileUploader)
+app.use("/api/venus/news", news)
 app.use("/api/venus/admin", adminPanel)
 
 app.listen(port, () => {
