@@ -4,7 +4,7 @@ const VenusListGroup = ({ header, list }) => {
 
 	return (
 		<ListGroup variant="flush">
-			<ListGroup.Item><b>{header.name}</b></ListGroup.Item>
+			<ListGroup.Item><b>{header}</b></ListGroup.Item>
 			{listItems}
 		</ListGroup>
 	);
