@@ -66,6 +66,33 @@ describe("Visitor must be able to sign up for an account from the login page and
     });
 
     /*
+    Scenario (US-2-43): A user tries to log in with unactivated account
+        Given I am a user with an unactivated account
+        And I am on the “Login/Signup” page
+        When I input my username/email address
+        And I input my password
+        And I click submit
+        Then a message appears stating that the account is still under review
+    */
+    it("should show warning and fail when invalid user tries to login", async () => {
+        // Given
+        await driver.get(reactAppURL + "login");
+
+        // When
+        const username_input_textbox = await getElementByXpath(driver, "//input[@id='login-form-username']");
+        const password_input_textbox = await getElementByXpath(driver, "//input[@id='login-form-password']");
+        const login_form_submit_btn = await getElementByXpath(driver, "//button[@id='login-form-submit-button']");
+
+        await username_input_textbox.sendKeys(email);
+        await password_input_textbox.sendKeys('pass');
+        await login_form_submit_btn.click();
+
+        // Then
+        const failed_login_alert = await getElementByXpath(driver, "//div[@id='invalid-user-alert']");
+        await expect(failed_login_alert).not.toBeNull();
+    });
+
+    /*
     Scenario (US-2-31) (User story 3 from RSD): Admin activates new user account
         Given I am an admin
         And I am logged into my account
