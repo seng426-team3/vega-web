@@ -5,7 +5,7 @@ const Logo = (props) => {
 	return (
 		<Navbar>
     		<Container>
-	      		<Navbar.Brand href="#home">
+	      		<Navbar.Brand href="/">
 	        		<LogoImage />
 	      		</Navbar.Brand>
    			 </Container>

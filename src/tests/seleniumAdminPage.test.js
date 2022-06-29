@@ -8,6 +8,10 @@ const firefox = require('selenium-webdriver/firefox');
 
 let driver;
 
+/*
+    The selenium tests here are described as new user stories in the milestone 3 report.
+    Feature: Admin user must be able to perform administrator tasks in Vega Absolute’s Admin panel
+*/
 describe("Admin must be able to perform administrator tasks", () => {
     beforeEach(() => {
         driver = new webdriver.Builder().forBrowser(driverBrowser)
@@ -15,6 +19,17 @@ describe("Admin must be able to perform administrator tasks", () => {
         .build();    
     })
 
+    /*
+    Scenario (US-2-17): Admin should be able to access the admin page after logging in.
+        Given I am a registered admin of Vega Absolute
+        And I am on the “Login” page
+        And I input my username/email address
+        And I input my password
+        And I click “Submit”
+        And I am logged in successfully if my credentials are correct
+        And Navigate to the “Admin” page of Vega Absolute
+        Then I can view the list of users in the admin panel on the “Admin” page
+    */
     it("should be able to access the admin page after logging in", async () => {
         // Given
         await driver.get(reactAppURL + "login");
@@ -37,6 +52,18 @@ describe("Admin must be able to perform administrator tasks", () => {
         await expect(admin_panel_table).not.toBeNull();
     });
 
+    /*
+    Scenario (US-2-18): Staff should not be able to access the admin page after logging in
+        Given I am a registered staff of Vega Absolute
+        And I am on the “Login” page
+        And I input my username/email address
+        And I input my password
+        And I click “Submit”
+        And I am logged in successfully if my credentials are correct
+        And Navigate to the “Admin” page of Vega Absolute by typing in the URL
+        Then I am unable to access the account page
+        And  I am shown an error alert message saying that I do not have permission to view this page.
+    */
     it("staff should not be able to access the admin page after logging in", async () => {
         // Given
         await driver.get(reactAppURL + "login");
@@ -59,6 +86,13 @@ describe("Admin must be able to perform administrator tasks", () => {
         await expect(not_found_alert_text).toEqual("You do not have permission to view this page.Go to Home");
     });
 
+    /*
+    Scenario (US-2-19): Visitors not logged in should not be able to access the admin page
+        Given I am a visitor of Vega Absolute
+        When I attempt to visit the admin page on Vega Absolute
+        Then I am unable to access the account page
+        And I am shown an error alert message saying that I do not have permission to view this page.
+    */
     it("should not be able to access the admin page when not logged in", async () => {
         // Given & When
         await driver.get(reactAppURL + "adminpanel");
@@ -69,7 +103,16 @@ describe("Admin must be able to perform administrator tasks", () => {
         await expect(alert_error_text).toEqual("You do not have permission to view this page.Go to Home");
     });
 
-    it("should not let logged in user be able to change their own role", async () => {
+    /*
+    Scenario (US-2-20): Admin should not be able to change their own role.
+        Given I am a registered admin of Vega Absolute
+        And I am logged in successfully
+        And I am on the “Admin” page
+        When I select my own user and select the option to change my role
+        Then an alert shows up indicating that I cannot change my own role
+        And my role stays as admin in Vega Absolute
+    */
+    it("should not let admin be able to change their own role", async () => {
         // Given
         await driver.get(reactAppURL + "login");
 
@@ -96,7 +139,16 @@ describe("Admin must be able to perform administrator tasks", () => {
         await expect(alert_error_text).toEqual("Error: cannot change your own role.\nClose");
     });
 
-    it("should not let logged in user be able to disable themselves", async () => {
+    /*
+    Scenario (US-2-21): Admin should not be able to disable themselves.
+        Given I am a registered admin of Vega Absolute
+        And I am logged in successfully
+        And I am on the “Admin” page
+        When I select my own user and select the option to disable the user
+        Then an alert shows up indicating that I cannot disable myself
+        And my account stays active in Vega Absolute   
+    */
+    it("should not let logged in admin be able to disable themselves", async () => {
         // Given
         await driver.get(reactAppURL + "login");
 

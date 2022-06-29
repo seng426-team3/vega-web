@@ -74,7 +74,7 @@ const SignUp = () => {
         <Form.Group className="mb-3" controlId="validation-sign-up-email">
           <Form.Label>Enter Email</Form.Label>
           <Form.Control
-            type="text"
+            type="email"
             onChange={(e) => setUsername(e.target.value)}
             required
           />
