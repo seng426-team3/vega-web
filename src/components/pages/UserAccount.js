@@ -1,4 +1,4 @@
-import {useState, useContext} from 'react';
+import {useContext} from 'react';
 import {useHistory} from "react-router-dom";
 import {Button, Row, Col} from 'react-bootstrap';
 import SimplePageLayout from '../templates/SimplePageLayout.js';
@@ -6,7 +6,7 @@ import {UserContext} from '../../auth/UserProvider.js';
 import {Alert} from 'react-bootstrap';
 
 const UserAccount = (props) => {
-	const {user, setUserInfo,logout} = useContext(UserContext);
+	const {user, logout} = useContext(UserContext);
 	const history = useHistory();
 	
 	const logoutAndRouteChange = () => {
@@ -21,7 +21,7 @@ const UserAccount = (props) => {
 					<Col sm={6}>
 						<p>Hello,</p>
 						<p id="username-text">{user.username}</p>
-						<Button onClick={logoutAndRouteChange} size="sm">signout</Button>
+						<Button id="signout-button" onClick={logoutAndRouteChange} size="sm">signout</Button>
 					</Col>
 				</Row>			
 			:

@@ -1,6 +1,4 @@
-import SimplePageLayout from "../templates/SimplePageLayout.js";
 import {Container, Alert} from "react-bootstrap";
-import {Link} from "react-router-dom";
 
 const NotFound404Page = (props) => {
     return (

@@ -3,7 +3,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {useContext} from 'react';
 import HomePageLayout from './components/templates/HomePageLayout.js';
 import NotFound404Page from './components/pages/NotFound404Page.js';
-import UserRegistrationPageLayout from './components/templates/UserRegistrationPageLayout.js'
 import { Route, Switch, Redirect } from 'react-router-dom';
 import Platform from './components/pages/Platform.js';
 import Login from './components/pages/Login.js';
@@ -18,6 +17,7 @@ import {UserContext} from './auth/UserProvider.js';
 import UserAccount from './components/pages/UserAccount.js';
 import AboutUs from './components/pages/AboutUs.js';
 import SignUp from './components/pages/SignUp.js';
+import ContactUs from './components/pages/ContactUs.js';
 
 function App() {
   
@@ -28,7 +28,7 @@ function App() {
    <UserProvider value ={user, setUserInfo, logout}> 
         <Switch>
         	<Route path="/" component={HomePageLayout} exact />
-        	<Route path="/contactus" component={UserRegistration} exact />
+        	<Route path="/contactus" component={ContactUs} exact />
         	<Route path="/leadership" component={Leadership} exact />
         	<Route path="/news" component={NewsAndEvents} />
         	<Route path="/platform" component={Platform} />

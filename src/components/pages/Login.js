@@ -10,8 +10,7 @@ import {Alert, Button} from 'react-bootstrap';
 
 const Login = (props) => {
 	
-	const { context } = props; 
-	const {user, setUserInfo,logout} = useContext(UserContext);
+	const {user, setUserInfo} = useContext(UserContext);
 	const [auth, setAuth] = useState(false);
 	const [unsuccessfulLogin, setUnsuccessfulLogin] = useState(false);
 
@@ -21,7 +20,7 @@ const Login = (props) => {
 			.then(res => {
 				console.log("Response", res);
 
-				if (res.message == "Unauthorized") {
+				if (res.message === "Unauthorized") {
 					setUnsuccessfulLogin(true);
 					return;
 				}

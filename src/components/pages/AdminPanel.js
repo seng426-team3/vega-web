@@ -12,6 +12,7 @@ const AdminPanel = (props) => {
 	const [isUserEnabledAlert, setIsUserEnabledAlert] = useState(false);
 	const [isUserDisabledAlert, setIsUserDisabledAlert] = useState(false);
 	const [isUserRoleChangedAlert, setIsUserRoleChangedAlert] = useState(false);
+	const [unauthorizedDisableAlert, setUnauthorizedDisableAlert] = useState(false);
 	const [unathorizedRoleChangeAlert, setUnauthorizedRoleChangeAlert] = useState(false);
 
 	useEffect(() => {
@@ -34,6 +35,14 @@ const AdminPanel = (props) => {
 
 	const disableUser = (username) => {
 		console.log("Disable user called with", username);
+
+		// Prevent user from disabling themselves
+		if (user.username === username) {
+			setUnauthorizedDisableAlert(true);
+			console.log("Unauthorized to disable yourself.");
+			return;
+		}
+
 		disableAccount(username, user.jwt)
 		.then(resp =>
 			console.log("User disabled"));
@@ -48,7 +57,7 @@ const AdminPanel = (props) => {
 		var role = evt.target.value
 
 		// Prevent user from changing their own role (e.g. admin setting themselves to staff/user)
-		if (user.username == username) {
+		if (user.username === username) {
 			setUnauthorizedRoleChangeAlert(true);
 			console.log("Unauthorized to change own role.");
 			return;
@@ -71,11 +80,11 @@ const AdminPanel = (props) => {
 					<td id={userInfoCollection.userInfo.username + "-username"} key={userInfoCollection.userInfo.username + "-username"} >{userInfoCollection.userInfo.username}</td>
 					{userInfoCollection.enabled ? 
 						<td id={userInfoCollection.userInfo.username + "-disable"} key={userInfoCollection.userInfo.username + "-disable"} onClick={() => disableUser(userInfoCollection.userInfo.username)}>
-							<a href="#">Disable User</a>
+							<a id={userInfoCollection.userInfo.username + "-disable-button"} key={userInfoCollection.userInfo.username + "-disable-button"} href="#">Disable User</a>
 						</td>
 					: 
 						<td id={userInfoCollection.userInfo.username + "-enable"} key={userInfoCollection.userInfo.username + "-enable"} onClick={() => enableUser(userInfoCollection.userInfo.username)}>
-							<a href="#">Enable User</a>
+							<a id={userInfoCollection.userInfo.username + "-enable-button"} key={userInfoCollection.userInfo.username + "-enable-button"} href="#">Enable User</a>
 						</td>
 					}
 					<td id={userInfoCollection.userInfo.username + "-role"} key={userInfoCollection.userInfo.username + "-role"}>{userInfoCollection.role}</td>
@@ -125,6 +134,17 @@ const AdminPanel = (props) => {
 				</div>	
 				</Alert>
 			}
+			{ unauthorizedDisableAlert && 
+				<Alert id="unauthorized-disable-alert" key="unauthorized-disable-alert" variant="danger">
+				Error: you cannot disable yourself from the application.
+				<hr/>
+				<div className="d-flex justify-content-end">
+					<Button onClick={() => setUnauthorizedDisableAlert(false)} variant="outline-danger">
+						Close
+					</Button>
+				</div>	
+				</Alert>
+			}
 			{ isUserRoleChangedAlert &&
 				<Alert id="user-role-changed-alert" key="unauthorized-role-change-alert" variant="success">
 				User role has been changed successfully.
@@ -137,7 +157,7 @@ const AdminPanel = (props) => {
 			</Alert>
 			}
 
-			{ user.role == "ROLE_ADMIN" ? (
+			{ user.role === "ROLE_ADMIN" ? (
 				<ListUsersAdminPanel users={listOfUsersHTML()}/>
 			) : (
 				<Alert id="alert-not-authorized-admin-page" variant="danger">You do not have permission to view this page.<Alert.Link href="/">Go to Home</Alert.Link></Alert>
