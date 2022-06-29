@@ -125,7 +125,7 @@ const BlogPageLayout = ({listOfNews, setNews}) => {
 						</Modal.Body>
 					</Modal>
 				</Container>
-				<ListNewsDetails listOfNews={listOfNews}/>
+				<ListNewsDetails listOfNews={listOfNews} setNews={setNews}/>
 			</Row>
 			<Footer />
 		</Container>

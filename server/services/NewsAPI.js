@@ -7,3 +7,7 @@ export function fetchNews(url, headers) {
 export function addNews(url, data, headers) {
     return doPost2(url, data, headers['authorization']);
 }
+
+export function deleteNews(url, data, headers) {
+    return doPost2(url, data, headers['authorization']);
+}

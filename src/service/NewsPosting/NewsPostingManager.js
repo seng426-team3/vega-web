@@ -7,3 +7,7 @@ export function fetchNews(token) {
 export function addNews(news, token) {
     return doPost2(process.env.REACT_APP_API_URL + "/api/venus/news/addnews", news, token);
 }
+
+export function deleteNews(news, token) {
+    return doPost2(process.env.REACT_APP_API_URL + "/api/venus/news/deletenews", news, token);
+}
