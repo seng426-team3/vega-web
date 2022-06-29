@@ -11,3 +11,7 @@ export function addNews(url, data, headers) {
 export function deleteNews(url, data, headers) {
     return doPost2(url, data, headers['authorization']);
 }
+
+export function editNews(url, data, headers) {
+    return doPost2(url, data, headers['authorization']);
+}
