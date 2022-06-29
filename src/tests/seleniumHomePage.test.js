@@ -19,12 +19,11 @@ describe('Test home page functionality', () => {
         await driver.get(reactAppURL);
         
         // When
-        const logo_element = await getElementByXpath(driver, "//embed[@src='/static/media/logo.45bf2061.svg']");
+        const logo_element = await getElementByXpath(driver, "//embed[@src='/static/media/logo.738272f3.png']");
         const logo_element_src = await logo_element.getAttribute('src');
         
         // Then
-        expect(logo_element_src).toEqual(reactAppURL + 'static/media/logo.45bf2061.svg');
-        expect(5).toEqual(5);
+        expect(logo_element_src).toEqual(reactAppURL + 'static/media/logo.738272f3.png');
     });
 
     afterEach(async () => {
