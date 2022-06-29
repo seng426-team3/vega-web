@@ -1,9 +1,9 @@
 import VenusListGroup from '../atoms/VenusListGroup.js';
 import {Row, Col} from 'react-bootstrap';
 const FooterNavBar = (props) => {
-	const [headOne, ...listOne] = ['PLATFORMS', 'Deep Packet Inspection (DPI)', 'Intrusion Detection and Prevention System (IDS/IPS)'];
-	const [headTwo, ...listTwo] = ['WHY VEGA?', 'Why Vega?', 'Industry Validation', 'Our Customers'];
-	const [headThree, ...listThree] = ['News', 'IG Design Group Selects Vega NextGen for Cybersecurity', 'Industry Validation', 'Our Customers'];
+	const [headOne, ...listOne] = [{ name: 'PLATFORMS', ref: '/platform' }, { name: 'Deep Packet Inspection (DPI)', ref: '/platform#dpi-header' }, { name: 'Intrusion Detection and Prevention System (IDS/IPS)', ref: '/platform#idp-ips-header'}];
+	const [headTwo, ...listTwo] = [{ name: 'Learn More', ref: '/aboutus' }, { name: 'Why Vega?', ref: '/aboutus#why-vega-header' }, { name: 'Industry Validation', ref: '/aboutus#industry-validation-header' }, { name: 'Our Customers', ref: '/aboutus#our-customers-header' }];
+	const [headThree, ...listThree] = [{ name: 'News', ref: '/news' }, { name: 'IG Design Group Selects Vega NextGen for Cybersecurity', ref: '/news#9.8.21' }, { name: 'Vega Announces Record Growth', ref: '/news#9.7.21' }];
 	return (
 			<Row>
 				<Col>
