@@ -1,4 +1,4 @@
-import {doGet} from './HTTPRequestAPI.js';
+import {doGet, doPost, doPostFile} from './HTTPRequestAPI.js';
 import fetch from 'node-fetch';
 import Promise from 'promise';
 import FormData from 'form-data';
@@ -14,13 +14,8 @@ export function fetchAllSecrets(url, headers){
 	return doGet(url, headers['authorization']);
 }
 
-export function createSecret(url, headers, data){
-	let formData = new FormData;
-
-	formData.append('file', data.file.data, data.file.name);
-	formData.append('secretname', "Super Secret");
-
-	return doVaultPost(url, headers, formData);
+export function createSecret(url, data, headers){
+	return doPostFile(url, data, headers);
 }
 
 export function readSecret(url, data, headers){
@@ -45,11 +40,6 @@ export function deleteSecret(url, data, headers){
     requestOptions = createRequestOptions(headers, data);
 
 	return doPost(url, requestOptions);
-}
-
-async function doVaultPost(url, headers, formData){
-	const response = await fetch(url, createVaultRequest("POST", headers, formData));
-	return await handleResponse(response);
 }
 
 function createVaultRequest(method, headers, formData) {

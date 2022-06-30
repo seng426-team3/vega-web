@@ -4,10 +4,6 @@ import fileUpload from 'express-fileupload';
 
 let router = express();
 
-router.use(fileUpload({
-  limits: { fileSize: 50 * 1024 * 1024 },
-}));
-
 router.get("/fetchsecrets", (req, res) => {
 	console.log("Request: User secrets");
 	fetchSecrets(process.env.API_URL + "/venus/vault/fetchsecrets", req.headers)
@@ -36,11 +32,7 @@ router.get("/fetchallsecrets", (req, res) => {
 
 router.post("/createsecret", (req, res) => {
 	var formData = req.files;
-	console.log("Request: Create secret");
-	console.log(req.headers);
-	console.log(req.body);
-	console.log(req.files);
-	createSecret(`${process.env.API_URL}/venus/vault/createsecret`, req.headers, formData)
+	createSecret(`${process.env.API_URL}/venus/vault/createsecret?secretname=` + req.query.secretname, formData, req.headers)
 	.then(response => {
 		console.log("Response", response);
 		res.send(response);
