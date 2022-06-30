@@ -1,7 +1,7 @@
 export const webdriver = require("selenium-webdriver");
 import { until, By } from "selenium-webdriver";
-export const driverBrowser = "firefox";
-export const reactAppURL = "http://127.0.0.1:3000/";
+export const driverBrowser = "chrome";
+export const reactAppURL = "http://localhost:3000/";
 
 export const getElementById = async (driver, id, timeout = 10000) => {
     const el = await driver.wait(until.elementLocated(By.id(id)), timeout);
