@@ -63,11 +63,12 @@ describe('Test footer functionality', () => {
       const news_footer_link = await getElementByXpath(driver, "//a[@href='/news#9.8.21']");
       news_footer_link.click();
 
-      const news_vega_date= await getElementByXpath(driver, "//p[@id='9.8.21']");
-      const news_vega_date_text = await news_vega_date.getText();
+      // When
+      const static_news_title = await getElementByXpath(driver, "//h1[text()='This is a news article!']");
+      const static_news_title_text = await static_news_title.getText();
 
       // Then
-      expect(news_vega_date_text).toEqual("9.8.21");
+      await expect(static_news_title_text).toEqual('This is a news article!');
     });
 
     afterEach(async () => {
