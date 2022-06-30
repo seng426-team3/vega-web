@@ -36,8 +36,7 @@ router.get("/fetchallsecrets", (req, res) => {
 
 router.post("/createsecret", (req, res) => {
 	console.log("Request: Create secret");
-	var formData = req.files;
-	createSecret(`${process.env.API_URL}/venus/vault/createsecret`, formData, req.headers)
+	createSecret(`${process.env.API_URL}/venus/vault/createsecret`, req.body, req.headers)
 	.then(response => {
 		console.log("Response", response);
 		res.send(response);

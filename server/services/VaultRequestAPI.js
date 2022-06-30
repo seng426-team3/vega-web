@@ -12,12 +12,13 @@ export function fetchAllSecrets(url, headers){
 }
 
 export function createSecret(url, data, headers){
-	//console.log(headers);
-	//console.log(url);
+	console.log(headers);
+	console.log(url);
+	console.log(data);
 
-    //requestOptions = createRequestOptions(headers, data);
-	return doPostFile(url, data, headers);
-	//return doPost(url, requestOptions);
+	console.log(createVaultRequest('POST', data))
+
+	return doVaultPost(url, data);
 }
 
 export function readSecret(url, data, headers){

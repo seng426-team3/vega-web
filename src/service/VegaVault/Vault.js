@@ -1,10 +1,8 @@
 import {doPostFile, doGet} from '../BaseAPI.js';
 
 export function fetchsecrets(token){
-    let formData = new FormData;
-    formData.append("token", token);
 
-	return doPostFile(process.env.REACT_APP_API_URL + "/api/venus/fetchsecrets", formData);
+	return doGet(process.env.REACT_APP_API_URL + "/api/venus/fetchsecrets", token);
 }
 
 export function fetchallsecrets(token){
@@ -12,10 +10,9 @@ export function fetchallsecrets(token){
 	return doGet(process.env.REACT_APP_API_URL + "/api/venus/fetchallsecrets", token);
 }
 
-export function createsecret(file, token, secretname){
+export function createsecret(file, secretname){
     let formData = new FormData;
     formData.append("file", file.data, file.name);
-    formData.append("token", token);
     formData.append("secretname", secretname);
 
 	return doPostFile(process.env.REACT_APP_API_URL + "/api/venus/createsecret", formData, token);

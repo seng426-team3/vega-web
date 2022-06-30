@@ -17,6 +17,11 @@ export async function doPostFile(url, data, headers){
   return await handleResponse(response);
 }
 
+export async function doVaultPost(url, data, headers){
+	const response = await fetch(url, createVaultRequest('POST', data, headers));
+	return await handleResponse(response);
+}
+
 function createRequestOptionsForFile(method, data_string, filename, headers){
   const formData = new FormData();
   formData.append("file", data_string, filename);
@@ -42,6 +47,17 @@ function  createRequestOptions(method, data, token){
   }
   if(data){
     requestOptions.body = JSON.stringify(data);
+  }
+  return requestOptions;
+}
+
+export function createVaultRequest(method, data, headers) {
+  var requestOptions = {
+    'method': method,
+    headers: {
+      'Authorization': headers['authorization']
+    },
+    body: data
   }
   return requestOptions;
 }
