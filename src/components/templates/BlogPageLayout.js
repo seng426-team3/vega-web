@@ -68,7 +68,6 @@ const BlogPageLayout = ({listOfNews, setNews}) => {
 				{ successfulAddPost && 
 						<Alert variant="success" onClose={() => setSuccessfulAddPost(false)} id="add-post-alert-success">
 						<Alert.Heading>Successfully Submitted News Article</Alert.Heading>
-						<p>Refresh the page or click close to view the news post</p>
 						<Button variant="outline-success" href="/news">
 							Close
 						</Button>
