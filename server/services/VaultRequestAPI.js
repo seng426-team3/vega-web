@@ -1,7 +1,4 @@
-import {doGet, doPost, doPostFile} from './HTTPRequestAPI.js';
-import fetch from 'node-fetch';
-import Promise from 'promise';
-import FormData from 'form-data';
+import {doGet, doPost, doPostFile, doTokenPost} from './HTTPRequestAPI.js';
 
 export function fetchSecrets(url, headers){
 	console.log(headers);
@@ -18,39 +15,29 @@ export function createSecret(url, data, headers){
 	return doPostFile(url, data, headers);
 }
 
-export function readSecret(url, data, headers){
+export function readSecret(url, headers){
 	console.log(url);
 
-    requestOptions = createRequestOptions(headers, data);
-
-	return doPost(url, requestOptions);
+	return doTokenPost(url, undefined, headers['authorization']);
 }
 
 export function updateSecret(url, data, headers){
 	console.log(url);
 
-    requestOptions = createRequestOptions(headers, data);
-
-	return doPost(url, requestOptions);
+	if (data.file.name != undefined) {
+		return doPostFile(url, data, headers);
+	}
+	return doTokenPost(url, undefined, headers['authorization'])
 }
 
-export function deleteSecret(url, data, headers){
+export function deleteSecret(url, headers){
 	console.log(url);
 
-    requestOptions = createRequestOptions(headers, data);
-
-	return doPost(url, requestOptions);
+	return doTokenPost(url, undefined, headers['authorization']);
 }
 
-function createVaultRequest(method, headers, formData) {
+export function shareSecret(url, headers) {
+	console.log(url);
 
-	var requestOptions = {
-	  'method': method,
-	  'headers': {
-		'Authorization': headers['authorization'],
-		'Content-type': 'multipart/form-data; boundary=${formData._boundary}'
-	  },
-	  'body': formData
-	}
-	return requestOptions;
-  }
+	return doTokenPost(url, undefined, headers['authorization']);
+}

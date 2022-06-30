@@ -1,6 +1,5 @@
 import express from 'express';
 import {fetchSecrets, fetchAllSecrets, createSecret, readSecret, updateSecret, deleteSecret} from '../services/VaultRequestAPI.js';
-import fileUpload from 'express-fileupload';
 
 let router = express();
 
@@ -32,7 +31,8 @@ router.get("/fetchallsecrets", (req, res) => {
 
 router.post("/createsecret", (req, res) => {
 	var formData = req.files;
-	createSecret(`${process.env.API_URL}/venus/vault/createsecret?secretname=` + req.query.secretname, formData, req.headers)
+	createSecret(`${process.env.API_URL}/venus/vault/createsecret?secretname=` 
+		+ req.query.secretname, formData, req.headers)
 	.then(response => {
 		console.log("Response", response);
 		res.send(response);
@@ -45,7 +45,8 @@ router.post("/createsecret", (req, res) => {
 
 router.post("/readsecret", (req, res) => {
 	console.log("Request: Read secret")
-	readSecret(`${process.env.API_URL}/venus/vault/readsecret`, req.body.formData, req.headers)
+	readSecret(`${process.env.API_URL}/venus/vault/readsecret?secretid=` 
+		+ req.query.secretid, req.headers)
 	.then(response => {
 		console.log("Response", response);
 		res.send(response);
@@ -58,7 +59,13 @@ router.post("/readsecret", (req, res) => {
 
 router.post("/secretupdate", (req, res) => {
 	console.log("Request: Update secret")
-	updateSecret(`${process.env.API_URL}/venus/vault/secretupdate`, req.body.formData, req.headers)
+	var formData = req.files;
+	var secretnameParam = "";
+	if (req.query.secretname != undefined) {
+		secretnameParam = "&secretname=" + req.query.secretname;
+	}
+	updateSecret(`${process.env.API_URL}/venus/vault/secretupdate?secretid=` 
+		+ req.query.secretid + secretnameParam, formData, req.headers)
 	.then(response => {
 		console.log("Response", response);
 		res.send(response);
@@ -71,7 +78,22 @@ router.post("/secretupdate", (req, res) => {
 
 router.post("/deletesecret", (req, res) => {
 	console.log("Request: Delete secret")
-	deleteSecret(`${process.env.API_URL}/venus/vault/deletesecret`, req.body.formData, req.headers)
+	deleteSecret(`${process.env.API_URL}/venus/vault/deletesecret?secretid=` 
+		+ req.query.secretid, req.headers)
+	.then(response => {
+		console.log("Response", response);
+		res.send(response);
+	})
+	.catch(error => {
+		console.log("ERROR:", error);
+		res.send(error)
+	});
+});
+
+router.post("/sharesecret", (req, res) => {
+	console.log("Request: Delete secret")
+	shareSecret(`${process.env.API_URL}/venus/vault/sharesecret?secretid=` 
+		+ req.query.secretid + "&targetuser=" + req.targetuser, req.headers)
 	.then(response => {
 		console.log("Response", response);
 		res.send(response);
