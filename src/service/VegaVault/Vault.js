@@ -27,9 +27,9 @@ export function readsecret(secretid, token){
 
 export function updatesecret(secretid, secretname, file, token){
     var secretnameParam = "";
+    let formData = new FormData();
 
     if (file != undefined && file != null) {
-        let formData = new FormData();
         formData.append("file", file);
     }
     if (secretname != undefined && secretname != null) {
