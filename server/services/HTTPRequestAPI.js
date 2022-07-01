@@ -27,10 +27,8 @@ function createRequestOptionsForFile(method, data_string, filename, headers){
   formData.append("file", data_string, filename);
   var requestOptions = {
     method: method,
-    dataType: 'json',
     headers: {
-      'Authorization': headers['authorization'],
-      'content-type': 'application/json'
+      'Authorization': headers['authorization']
     },
     body: formData
   }
