@@ -14,35 +14,40 @@ export function createsecret(file, secretname, token){
     let formData = new FormData();
     console.log("file secret: " + file);
     formData.append("file", file);
-    //formData.append("secretname", secretname);
 
-	return doPostFile(process.env.REACT_APP_API_URL + "/api/venus/vault/createsecret?secretname=" + secretname, formData, token);
+	return doPostFile(process.env.REACT_APP_API_URL + "/api/venus/vault/createsecret?secretname=" 
+        + secretname, formData, token);
 }
 
 export function readsecret(secretid, token){
-    let formData = new FormData();
-    formData.append("secretid", secretid);
 
-	return doPostFile(process.env.REACT_APP_API_URL + "/api/venus/vault/readsecret", formData, token);
+	return doPostFile(process.env.REACT_APP_API_URL + "/api/venus/vault/readsecret?secretid=" 
+        + secretid, token);
 }
 
 export function updatesecret(secretid, secretname, file, token){
-    let formData = new FormData();
-    formData.append("secretid", secretid);
+    var secretnameParam = "";
 
-    if (file != null) {
-        formData.append("file", file.data, file.name);
+    if (file != undefined && file != null) {
+        let formData = new FormData();
+        formData.append("file", file);
     }
-    if (secretname != null) {
-        formData.append("secretname", secretname);
+    if (secretname != undefined && secretname != null) {
+        secretnameParam = "&secretname=" + secretname;
     }
 
-	return doPostFile(process.env.REACT_APP_API_URL + "/api/venus/vault/updatesecret", formData, token);
+	return doPostFile(process.env.REACT_APP_API_URL + "/api/venus/vault/updatesecret?secretid=" 
+        + secretid + secretnameParam, formData, token);
 }
 
 export function deletesecret(secretid, token){
-    let formData = new FormData();
-    formData.append("secretid", secretid);
 
-	return doPostFile(process.env.REACT_APP_API_URL + "/api/venus/vault/deletesecret", formData, token);
+	return doPostFile(process.env.REACT_APP_API_URL + "/api/venus/vault/deletesecret?secretid=" 
+        + secretid, token);
+}
+
+export function shareesecret(secretid, targetuser, token){
+
+	return doPostFile(process.env.REACT_APP_API_URL + "/api/venus/vault/deletesecret?secretid=" 
+        + secretid + "&targetuser=" + targetuser, token);
 }
