@@ -22,7 +22,7 @@ export function createsecret(file, secretname, token){
 export function readsecret(secretid, token){
 
 	return doPostFile(process.env.REACT_APP_API_URL + "/api/venus/vault/readsecret?secretid=" 
-        + secretid, token);
+        + secretid, undefined, token);
 }
 
 export function updatesecret(secretid, secretname, file, token){
@@ -43,11 +43,11 @@ export function updatesecret(secretid, secretname, file, token){
 export function deletesecret(secretid, token){
 
 	return doPostFile(process.env.REACT_APP_API_URL + "/api/venus/vault/deletesecret?secretid=" 
-        + secretid, token);
+        + secretid, undefined, token);
 }
 
 export function shareesecret(secretid, targetuser, token){
 
 	return doPostFile(process.env.REACT_APP_API_URL + "/api/venus/vault/deletesecret?secretid=" 
-        + secretid + "&targetuser=" + targetuser, token);
+        + secretid + "&targetuser=" + targetuser, undefined, token);
 }
