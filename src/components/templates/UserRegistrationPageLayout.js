@@ -1,7 +1,7 @@
 import Header from '../UI/organisms/Header.js';
 import Footer from '../UI/organisms/Footer.js';
 import Content from '../UI/organisms/Content.js';
-import {Container, Row} from 'react-bootstrap';
+import {Container} from 'react-bootstrap';
 
 const UserRegistrationPageLayout = ({children}) => {
 	return (

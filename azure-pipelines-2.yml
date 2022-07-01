@@ -8,7 +8,12 @@ trigger:
 - feature/*
 
 resources:
-- repo: self
+  repositories:
+  - repository: vega-spring
+    type: github
+    name: seng426-team3/vega-spring
+    ref: main
+    endpoint: 'seng426-team3'
 
 variables:
   # Container registry service connection established during pipeline creation
@@ -40,11 +45,12 @@ stages:
         inputs:
           pollingTimeoutSec: '300'
 - stage: Build
-  displayName: Build and push stage
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+  displayName: Build, push, and selenium testing stage
   jobs:
   - job: Build
-    displayName: Build
+    # Publish docker image if in main branch
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+    displayName: Build and Push
     pool:
       vmImage: $(vmImageName)
     steps:
@@ -58,4 +64,36 @@ stages:
         tags: |
           $(tag)
           latest
-
+  - job: SeleniumTesting
+    # Run selenium tests if main, develop, or feature branch
+    condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/main'), eq(variables['Build.SourceBranch'], 'refs/heads/develop')))
+    displayName: User Functionality Testing (Selenium)
+    pool:
+      vmImage: $(vmImageName)
+    steps:
+    - checkout: self
+      path: vega-web
+    - checkout: vega-spring
+      path: vega-spring
+    - bash: |
+        docker-compose build
+        docker-compose up -d
+      displayName: Build and start vega-spring containers
+      workingDirectory: "/home/vsts/work/1/vega-spring"
+    - bash: |
+        docker-compose build
+        docker-compose up -d
+      displayName: Build and start vega-web containers
+      workingDirectory: "/home/vsts/work/1/vega-web"
+    - script: |
+        npm cache clean --force
+        npm install --production
+      displayName: 'npm install'
+      workingDirectory: "/home/vsts/work/1/vega-web"
+    - script: |
+        docker container ls 
+      displayName: 'docker list running containers'
+    - script: |
+        CI=true npm test
+      displayName: 'npm test (Selenium testing)'
+      workingDirectory: "/home/vsts/work/1/vega-web"

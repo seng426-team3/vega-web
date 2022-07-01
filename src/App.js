@@ -2,10 +2,8 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {useContext} from 'react';
 import HomePageLayout from './components/templates/HomePageLayout.js';
-import BlogPageLayout from './components/templates/BlogPageLayout.js';
-import UserRegistrationPageLayout from './components/templates/UserRegistrationPageLayout.js'
-import SimplePageLayout from './components/templates/SimplePageLayout.js'
-import { Route, Switch } from 'react-router-dom';
+import NotFound404Page from './components/pages/NotFound404Page.js';
+import { Route, Switch, Redirect } from 'react-router-dom';
 import Platform from './components/pages/Platform.js';
 import Login from './components/pages/Login.js';
 import NewsAndEvents from './components/pages/NewsAndEvents.js';
@@ -18,8 +16,10 @@ import SecretForm from './components/pages/SecretForm.js';
 import EditSecretForm from './components/pages/EditSecretForm.js';
 import {UserProvider} from './auth/UserProvider.js';
 import {UserContext} from './auth/UserProvider.js';
-
 import UserAccount from './components/pages/UserAccount.js';
+import AboutUs from './components/pages/AboutUs.js';
+import SignUp from './components/pages/SignUp.js';
+import ContactUs from './components/pages/ContactUs.js';
 
 function App() {
   
@@ -30,17 +30,21 @@ function App() {
    <UserProvider value ={user, setUserInfo, logout}> 
         <Switch>
         	<Route path="/" component={HomePageLayout} exact />
-        	<Route path="/contactus" component={UserRegistration} exact />
+        	<Route path="/contactus" component={ContactUs} exact />
         	<Route path="/leadership" component={Leadership} exact />
         	<Route path="/news" component={NewsAndEvents} />
         	<Route path="/platform" component={Platform} />
-        	<Route path="/login" component={Login} />
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={SignUp} />
           <Route path="/account" component={UserAccount} />
           <Route path="/resources" component={Resources} />
           <Route path="/adminpanel" component={AdminPanel} />
           <Route path="/vega-vault" component={VegaVault} />
           <Route path="/secret-form" component={SecretForm} />
           <Route path="/edit-secret-form" component={EditSecretForm} />
+          <Route path="/aboutus" component={AboutUs}/>
+          <Route path="/404" component={NotFound404Page} />
+          <Redirect to="/404" />
         </Switch>
     </UserProvider>
   );

@@ -1,8 +1,14 @@
 import fetch from 'node-fetch';
 import Promise from 'promise';
+import FormData from 'form-data';
 
 export async function doPost(url, data){
 	const response = await fetch(url, createRequestOptions('POST', data));
+	return await handleResponse(response);
+}
+
+export async function doTokenPost(url, data, token){
+	const response = await fetch(url, createRequestOptions('POST', data, token));
 	return await handleResponse(response);
 }
 
@@ -12,21 +18,21 @@ export async function doGet(url, token){
 }
 
 export async function doPostFile(url, data, headers){
-  const response = await fetch(url, createRequestOptionsForFile('POST', data, headers));
+  const response = await fetch(url, createRequestOptionsForFile('POST', data.file.data, data.file.name, headers));
   return await handleResponse(response);
 }
 
-function createRequestOptionsForFile(method, data, headers){
-  console.log(headers);
+function createRequestOptionsForFile(method, data_string, filename, headers){
+  const formData = new FormData();
+  formData.append("file", data_string, filename);
   var requestOptions = {
-    'method': method,
-    'headers': {
-      'Content-Type': undefined,
+    method: method,
+    headers: {
       'Authorization': headers['authorization']
     },
-    'formData': data
-    }
-    console.log(requestOptions)
+    body: formData
+  }
+  console.log(requestOptions)
   return requestOptions;
 }
 
