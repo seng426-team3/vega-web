@@ -7,6 +7,11 @@ export async function doPost(url, data){
 	return await handleResponse(response);
 }
 
+export async function doPost2(url, data, token){
+	const response = await fetch(url, createRequestOptions('POST', data, token));
+	return await handleResponse(response);
+}
+
 export async function doGet(url, token){
   const response = await fetch(url, createRequestOptions('GET', undefined, token));
   return await handleResponse(response);
@@ -22,8 +27,10 @@ function createRequestOptionsForFile(method, data_string, filename, headers){
   formData.append("file", data_string, filename);
   var requestOptions = {
     method: method,
+    dataType: 'json',
     headers: {
-      'Authorization': headers['authorization']
+      'Authorization': headers['authorization'],
+      'content-type': 'application/json'
     },
     body: formData
   }
