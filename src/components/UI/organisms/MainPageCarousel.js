@@ -21,9 +21,9 @@ const MainPageCarousel = (props) => {
           alt="First slide"
           height="600"
         />
-        <Carousel.Caption>
-          <h3>Vega Vault is ultra Secure</h3>
-          <p>We're all about security.</p>
+        <Carousel.Caption id="carousel-text-1">
+          <h3>Welcome to Vega Absolute!</h3>
+          <p>The nation's leading Cyber Security company</p>
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
@@ -34,9 +34,9 @@ const MainPageCarousel = (props) => {
           height="600"
         />
 
-        <Carousel.Caption>
-          <h3>News Articles Updated Daily</h3>
-          <p>Enjoy the best security articles updated daily.</p>
+        <Carousel.Caption id="carousel-text-2">
+          <h3>Unparalleled Security Solutions</h3>
+          <p>Hire us to attend to your most precious assets and resources</p>
         </Carousel.Caption>
       </Carousel.Item>
       <Carousel.Item>
@@ -47,10 +47,10 @@ const MainPageCarousel = (props) => {
           height="600"
         />
 
-        <Carousel.Caption>
-          <h3>Vega Vault Secrets</h3>
+        <Carousel.Caption id="carousel-text-3">
+          <h3>Customer Security Products</h3>
           <p>
-            Add secrets and share them with friends.
+            Our flagship product, Vega Vault, will keep your secrets secure and safe.
           </p>
         </Carousel.Caption>
       </Carousel.Item>

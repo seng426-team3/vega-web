@@ -41,6 +41,24 @@ describe('Test home page functionality', () => {
         expect(home_page_carousel).not.toBeNull();
     });
 
+    it("should display the correct carousel page text", async () => {
+        // Given & When
+        await driver.get(reactAppURL);
+        
+        // Then
+        const carousel_element_1 = await getElementByXpath(driver, "//div[@id='carousel-text-1']");
+        const carousel_element_1_text = await carousel_element_1.getText();
+        expect(carousel_element_1_text).toEqual("Welcome to Vega Absolute!\nThe nation's leading Cyber Security company");
+
+        const carousel_element_2 = await getElementByXpath(driver, "//div[@id='carousel-text-2']");
+        const carousel_element_2_text = await carousel_element_2.getText();
+        expect(carousel_element_2_text).toEqual("Unparalleled Security Solutions\nHire us to attend to your most precious assets and resources");
+
+        const carousel_element_3 = await getElementByXpath(driver, "//div[@id='carousel-text-3']");
+        const carousel_element_3_text = await carousel_element_3.getText();
+        expect(carousel_element_3_text).toEqual("Customer Security Products\nOur flagship product, Vega Vault, will keep your secrets secure and safe.");
+    });
+
     afterEach(async () => {
         await driver.quit();
     }, 15000);
