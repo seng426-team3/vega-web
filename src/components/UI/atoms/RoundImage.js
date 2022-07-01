@@ -1,4 +1,4 @@
-import {Row, Image} from 'react-bootstrap';
+import {Image} from 'react-bootstrap';
 const RoundImage = ({src, name, email, pos})	=> {
 	return (
 		<div className="text-center mt-2">

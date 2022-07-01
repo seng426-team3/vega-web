@@ -3,6 +3,7 @@ import SimplePageLayout from '../templates/SimplePageLayout.js';
 import {Form, Button, Row, Col} from 'react-bootstrap';
 import {fileUploader, fetchFiles, fetchData} from '../../service/FileUpload/FileUploader.js';
 import {UserContext} from '../../auth/UserProvider.js';
+import {Alert, Table} from 'react-bootstrap';
 
 const Resources = (props) => {	
 	
@@ -12,6 +13,9 @@ const Resources = (props) => {
 	const [listOfFiles, setFiles] = useState([]);
 	const [dataLoaded, setDataLoaded] = useState(false);
 	const [content, setContent] = useState('');
+	const [isFileUploadSuccessfulAlert, setIsFileUploadSuccessfulAert] = useState(false);
+	const [isFileUploadFailedAlert, setIsFileUploadFailedAlert] = useState(false);
+
 	var uploadHTML;
 	useEffect(() => {
 		console.log("JWT is",user.jwt, dataLoaded)
@@ -31,10 +35,18 @@ const Resources = (props) => {
 
 	const handleSubmission = () => {
 		const formData = new FormData();
+		console.log("SELECTED FILE");
+		console.log(selectedFile);
 		formData.append("file", selectedFile);
 		fileUploader(formData, user.jwt)
 			.then(res => {
 				console.log("Response", res);
+
+				if (res === "File uploaded Successfully") {
+					setIsFileUploadSuccessfulAert(true);
+					return;
+				}
+				setIsFileUploadFailedAlert(true);
 			})
 
 	}
@@ -47,14 +59,19 @@ const Resources = (props) => {
 			})
 	}
 
-	const listOfFilesHTML = () => {
-		if(listOfFiles.length){
-			return listOfFiles.map((file) => <li onClick={() => fetchFileData(file)} style={{"cursor":"pointer"}}><a href="#">{file}</a></li>)
+	const tableOfFilesHTML = () => {
+		if(listOfFiles.length) {
+			return listOfFiles.map((file) => 
+				<tr id={"file-entry" + file} key={"file-entry" + file}>
+					<td id={"filename-" + file} key={"filename-" + file}>
+						<a id={"filename-link-" + file} key={"filename-link-" + file} href="#" onClick={() => fetchFileData(file)}>{file}</a>
+					</td>
+				</tr>
+			);
 		}
-
 	}
 
-	if (user.role == "ROLE_ADMIN"){
+	if (user.role === "ROLE_ADMIN"){
 		uploadHTML = (<Row>
 				<Col className="mx-auto" xs={6}>
 					<Form.Group controlId="formFile" className="mb-3">
@@ -70,18 +87,59 @@ const Resources = (props) => {
 
 	return (
 		<SimplePageLayout>
-			
-			{uploadHTML}
-			<Row mt="5">
-				<Col sm={6}>
-					<ul style={{"list-style-type":"none"}}>{listOfFilesHTML()}</ul>
-				</Col>
-			</Row>
-			<Row>
-				<Col>
-					{content}
-				</Col>
-			</Row>
+			{ isFileUploadSuccessfulAlert &&
+				<Alert id="file-upload-successful-alert" key="file-upload-successful-alert" variant="success">
+					File has been uploaded successfully! Refresh the page to see the files.
+					<hr/>
+					<div className="d-flex justify-content-end">
+						<Button onClick={() => setIsFileUploadSuccessfulAert(false)} variant="outline-success">
+							Close
+						</Button>
+					</div>	
+				</Alert>
+			}
+			{ isFileUploadFailedAlert &&
+				<Alert id="file-upload-failed-alert" key="file-upload-failed-alert" variant="danger">
+					An error occurred while trying to upload the file.
+					<hr/>
+					<div className="d-flex justify-content-end">
+						<Button onClick={() => setIsFileUploadFailedAlert(false)} variant="outline-danger">
+							Close
+						</Button>
+					</div>	
+				</Alert>
+			}
+			{ user.role === "ROLE_ADMIN" ? (
+				uploadHTML
+			) : (
+				<p id="cannot-upload-notice">You are not allowed to upload files as staff.</p>
+			)
+			}
+			{ (user.role === "ROLE_ADMIN" || user.role === "ROLE_STAFF") && 
+				<Row mt="5">
+					<Table id="resources-file-table">
+						<thead>
+							<tr>
+								<td>Filename</td>
+							</tr>
+						</thead>
+						<tbody>
+							{tableOfFilesHTML()}
+						</tbody>
+					</Table>
+				</Row>
+			}
+			{ user.role === "ROLE_ADMIN" || user.role === "ROLE_STAFF" ? (
+				<Row>
+					<h3>Selected File Content</h3>
+					<Col id="file-content" key="file-content">
+						{content}
+					</Col>
+				</Row>	
+			) : ( 
+				<Alert id="alert-not-authorized-resources-page" variant="danger">You do not have permission to view this page.<Alert.Link href="/">Go to Home</Alert.Link></Alert>
+			)};
+
 		</SimplePageLayout>
 		);
 }

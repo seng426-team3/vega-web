@@ -1,18 +1,20 @@
 import SimplePageLayout from '../templates/SimplePageLayout.js';
-import {Button} from 'react-bootstrap';
-import {UserContext} from '../../auth/UserProvider.js';
-import {useContext, useMemo, useState} from 'react';
-import {withRouter} from 'react-router-dom'
 import { AgGridReact } from 'ag-grid-react';
 import './VegaVault.css';
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 
-const VegaVault = (props) => {
+import {Button, Table} from 'react-bootstrap';
+import {UserContext} from '../../auth/UserProvider.js';
+import {useContext, useState} from 'react';
+import {withRouter} from 'react-router-dom'
+import {createsecret} from '../../service/VegaVault/Vault.js'
+import {Row, Col, Form} from 'react-bootstrap';
 
+const VegaVault = (props) => {
 	const {user} = useContext(UserContext);
-  	
+	
 	const goToLogin = () => {
 		props.history.push("/login");
 	}

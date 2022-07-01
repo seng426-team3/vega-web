@@ -1,4 +1,3 @@
-import bodyParser from 'body-parser';
 import express from 'express';
 import {uploader, listFiles, fetchcontent} from '../services/FileHandlerAPI.js';
 import fileUpload from 'express-fileupload';
@@ -37,7 +36,7 @@ router.get("/listfiles", (req, res) => {
     	console.log("ERROR:", error);
     	res.send(error);
     })
-})
+});
 
 router.get("/fetchcontent", (req, res) => {
 	console.log("Fetch Content")
@@ -52,7 +51,6 @@ router.get("/fetchcontent", (req, res) => {
     	console.log("ERROR:", error);
     	res.send(error);
     })
-
-})
+});
 
 export default router;
