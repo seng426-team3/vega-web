@@ -46,7 +46,7 @@ export function deletesecret(secretid, token){
         + secretid, undefined, token);
 }
 
-export function shareesecret(secretid, targetuser, token){
+export function sharesecret(secretid, targetuser, token){
 
 	return doPostFile(process.env.REACT_APP_API_URL + "/api/venus/vault/deletesecret?secretid=" 
         + secretid + "&targetuser=" + targetuser, undefined, token);
