@@ -15,11 +15,11 @@ import {Row, Col, Form} from 'react-bootstrap';
 const VegaVault = (props) => {
 	const {user} = useContext(UserContext);
 
-	function getSecrets(){
+	async function getSecrets(){
 		var listOfSecrets;
 
 		try {
-			listOfSecrets = fetchsecrets(user.jwt);
+			listOfSecrets = await fetchsecrets(user.jwt);
 			console.log(listOfSecrets);
 		}
 		catch(err) {
@@ -72,10 +72,12 @@ const VegaVault = (props) => {
 		props.history.push("/edit-secret-form");
 	};
 
+	const listOfSecrets = getSecrets();
 
+	console.log(listOfSecrets);
 
 	const gridRef = useRef(null);
-	const [rowData, setRowData] = useState(getSecrets());
+	const [rowData, setRowData] = useState(listOfSecrets);
 
 	const containerStyle = useMemo(() => ({width: "100%", height: "100%"}), []);
 	const gridStyle = useMemo(() => ({width: "100%", height: "100%"}), []);
@@ -88,9 +90,9 @@ const VegaVault = (props) => {
 	}));
 
 	const [columnDefs] = useState([
-		{field: 'Name', width: 100, editable: true},
-		{field: 'CreationDate', width: 100},
-		{field: 'Data', width: 100}
+		{field: 'secretName', width: 100, editable: true},
+		{field: 'creatDate', width: 100, headerName: 'Creation Date'},
+		{field: 'fileType', width: 100}
 	]);
 
 	const removeSelected = useCallback(() => {
