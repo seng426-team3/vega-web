@@ -16,15 +16,47 @@ const VegaVault = (props) => {
 	const {user} = useContext(UserContext);
 
 	function getSecrets(){
-		// var listOfSecrets = fetchsecrets(user.jwt);
-		var listOfSecrets = [
-			{Name: "Secret stuff", CreationDate: "2022-06-27", Data: "txt"}, {Name: "Dog", CreationDate: "2020-05-25", Data: "png"},
-			{Name: "Passwords", CreationDate: "2013-03-16", Data: "txt"}, {Name: "Holiday Hawaii", CreationDate: "2019-02-20", Data: "png"},
-			{Name: "CSC426Report1", CreationDate: "2022-06-05", Data: "txt"}, {Name: "Cat", CreationDate: "2020-05-26", Data: "png"},
-			{Name: "CSC426Report2", CreationDate: "2022-06-19", Data: "txt"}, {Name: "Holiday Spain", CreationDate: "2010-04-14", Data: "png"},
-			{Name: "CSC426Report3", CreationDate: "2022-07-02", Data: "txt"}, {Name: "Meme", CreationDate: "2022-06-27", Data: "png"},
-			{Name: "Final Exam", CreationDate: "2021-12-15", Data: "txt"}, {Name: "Camping 2021", CreationDate: "2021-07-01", Data: "png"}
-		];
+		var listOfSecrets;
+
+		try {
+			listOfSecrets = fetchsecrets(user.jwt);
+			console.log(listOfSecrets);
+		}
+		catch(err) {
+			console.log(err.message);
+			listOfSecrets = [
+				{Name: "Secret stuff", CreationDate: "2022-06-27", Data: "txt"}, {
+					Name: "Dog",
+					CreationDate: "2020-05-25",
+					Data: "png"
+				},
+				{Name: "Passwords", CreationDate: "2013-03-16", Data: "txt"}, {
+					Name: "Holiday Hawaii",
+					CreationDate: "2019-02-20",
+					Data: "png"
+				},
+				{Name: "CSC426Report1", CreationDate: "2022-06-05", Data: "txt"}, {
+					Name: "Cat",
+					CreationDate: "2020-05-26",
+					Data: "png"
+				},
+				{Name: "CSC426Report2", CreationDate: "2022-06-19", Data: "txt"}, {
+					Name: "Holiday Spain",
+					CreationDate: "2010-04-14",
+					Data: "png"
+				},
+				{Name: "CSC426Report3", CreationDate: "2022-07-02", Data: "txt"}, {
+					Name: "Meme",
+					CreationDate: "2022-06-27",
+					Data: "png"
+				},
+				{Name: "Final Exam", CreationDate: "2021-12-15", Data: "txt"}, {
+					Name: "Camping 2021",
+					CreationDate: "2021-07-01",
+					Data: "png"
+				}
+			];
+		}
 		return listOfSecrets;
 	}
 

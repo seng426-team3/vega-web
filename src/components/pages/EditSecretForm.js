@@ -1,6 +1,7 @@
 import SimplePageLayout from "../templates/SimplePageLayout.js";
 import {withRouter} from "react-router-dom";
 import React from "react";
+import {updatesecret} from "../../service/VegaVault/Vault";
 
 
 const EditSecretForm = (props) => {
@@ -19,6 +20,8 @@ const EditSecretForm = (props) => {
                 <input type="submit" onClick={goToVault}/>
             </form>
         </SimplePageLayout>;
+
+    updatesecret(document.getElementById("secretFile"), document.getElementById("secretName").value, user.jwt);
 
     return (page);
 }
