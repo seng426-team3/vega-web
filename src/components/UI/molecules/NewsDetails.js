@@ -102,7 +102,7 @@ const NewsDetails = ({news, setNews}) => {
 					{(user.role === 'ROLE_ADMIN' || user.role === 'ROLE_STAFF') && <Button onClick={handleDelete} id="delete-post-btn" >Delete</Button>}
 				</Container>
 				<p class="text-left">{news.newsDate}</p>
-				<h1>{news.title}</h1>
+				<h1 class="news-title">{news.title}</h1>
 				<h2>{news.author}</h2>
 				<p>{news.bodyText}</p>
 			</div>
