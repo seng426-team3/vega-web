@@ -62,6 +62,23 @@ describe("Users must be able to fetch their secrets, use CRUD operations on them
         await expect(secret_name).toEqual("Super Secret");
     });
 
+        /*
+    Scenario: Admin views all secrets
+        Given I am an admin
+        When I click “Manage Secrets”
+        Then a list of all secrets from all users is displayed with options to manage them
+    */
+    it("Admin should be able to fetch all secrets", async() => {
+        // Given
+        await signIn("admin@venus.com");
+
+        // When
+        await driver.get(reactAppURL + "vega-vault");
+
+        // Then
+        // TO-DO write creation test
+    });
+
     /*
     Scenario: User successfully creates a new secret
         Given I am a logged in user
