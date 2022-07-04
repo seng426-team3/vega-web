@@ -9,17 +9,21 @@ import './VegaVault.css';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 
-import {fetchsecrets, fetchallsecrets, createsecret} from '../../service/VegaVault/Vault.js'
+import {fetchsecrets, fetchallsecrets, deletesecret} from '../../service/VegaVault/Vault.js'
 import {Row, Col, Form} from 'react-bootstrap';
 
 const VegaVault = (props) => {
 	const {user} = useContext(UserContext);
 
 	function getSecrets(){
-		var listOfSecrets;
+		var listOfSecrets = [];
+		if(user.role === "ROLE_ADMIN") {
+			listOfSecrets = fetchallsecrets(user.jwt);
 
-		listOfSecrets = fetchallsecrets(user.jwt);
-
+		}
+		else{
+			listOfSecrets = fetchsecrets(user.jwt);
+		}
 		return listOfSecrets;
 	}
 
@@ -43,7 +47,7 @@ const VegaVault = (props) => {
 		return result;
 	});
 	console.log(arrayVal);
-	const gridRef = useRef(null);
+	const gridRef = useRef();
 
 	const [rowData, setRowData] = useState([]);
 
@@ -60,21 +64,17 @@ const VegaVault = (props) => {
 	const [columnDefs] = useState([
 		{field: 'secretName', width: 100, editable: true},
 		{field: 'creatDate', width: 100, headerName: 'Creation Date'},
-		{field: 'fileType', width: 100}
+		{field: 'fileType', width: 100},
+		{field: 'secretID', width: 100, hide: true}
 	]);
 
-	// const removeSelected = useCallback(() => {
-	//
-	// 	const selectedRowNodes = gridRef.current.api.getSelectedNodes();
-	// 	const selectedIDs = selectedRowNodes.map(function (rowNode){
-	// 		return rowNode.id;
-	// 	});
-	// 	const filterData = rowData.filter(function (dataItem){
-	// 		return selectedIDs.indexOf(dataItem.Name) < 0;
-	// 	});
-	// 	setRowData(filterData);
-	//
-	// }, [rowData]);
+	const removeSelected = useCallback(() => {
+
+		const selectedRow = gridRef.current.api.getSelectedRows();
+		var selectedID = selectedRow.length === 1 ? selectedRow[0].secretID : '';
+		console.log("Deleted: " + selectedID);
+		deletesecret(selectedID, user.jwt);
+	}, []);
 
 	const updateButton = () => {
 		console.log(arrayVal);
@@ -83,7 +83,7 @@ const VegaVault = (props) => {
 
 	var page;
 	
-	if (!(user.role != "ROLE_STAFF" || user.role != "ROLE_USER" || user.role != "ROLE_ADMIN")) {
+	if (!(user.role !== "ROLE_STAFF" || user.role !== "ROLE_USER" || user.role !== "ROLE_ADMIN")) {
 		page = 
 			<SimplePageLayout>
 				<h1>Vega Vault</h1>
@@ -101,7 +101,8 @@ const VegaVault = (props) => {
 					<button onClick={goToCreateSecret} className="button-blue" size = "sm">+ New Secret</button>
 					<button onClick={goToEditSecret} className="button-blue" size = "sm">Edit Secret</button>
 					<button className="button-blue" size = "sm">Share Secret</button>
-					<button onClick={updateButton} className="button-red" size = "sm">Delete Secret</button>
+					<button onClick={removeSelected} className="button-red" size = "sm">Delete Secret</button> <br/> <br/>
+					<button onClick={updateButton} className="button-blue" size = "sm">Refresh Table</button>
 				</div>
 				<div style={containerStyle}>
 					<div style={{height: '475px', boxSizing: 'border-box'}}>
@@ -110,7 +111,7 @@ const VegaVault = (props) => {
 										 rowData={rowData}
 										 columnDefs={columnDefs}
 										 defaultColDef={defaultColDef}
-										 rowSelection={'multiple'}
+										 rowSelection={'single'}
 										 animateRows={true}>
 							</AgGridReact>
 						</div>
