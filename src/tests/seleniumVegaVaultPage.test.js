@@ -14,7 +14,7 @@ let driver;
 describe("Users must be able to fetch their secrets, use CRUD operations on them, and share them. Admins must be able to fetch all secrets", () => {
     beforeEach(() => {
         driver = new webdriver.Builder().forBrowser(driverBrowser)
-        .setFirefoxOptions(new firefox.Options().headless().windowSize(screen)) // comment this line to run in browser locally
+        //.setFirefoxOptions(new firefox.Options().headless().windowSize(screen)) // comment this line to run in browser locally
         .build();
     });
 
@@ -96,7 +96,29 @@ describe("Users must be able to fetch their secrets, use CRUD operations on them
         await driver.get(reactAppURL + "vega-vault");
 
         // Then
-        // TO-DO write creation test
+        // Vega Vault page
+        const creation_button = await getElementByXpath(driver, "//*[@id=\"button-box\"]/button[1]");
+        await creation_button.click();
+
+        // Creation form page
+        const secret_name_field = await getElementByXpath(driver, "//*[@id=\"secretName\"]");
+        await secret_name_field.sendKeys("Test Secret");
+        
+        const file_upload_select = await getElementByXpath(driver, "//*[@id=\"secretFile\"]");
+        await file_upload_select.sendKeys(process.cwd() + '/src/tests/testfile.txt');
+        
+        const upload_button = await getElementByXpath(driver, "//*[@id=\"root\"]/div/div[1]/div[2]/button");
+        await upload_button.click();
+
+        // Back to Vega Vault page
+        const refresh_button = await getElementByXpath(driver, "//*[@id=\"button-box\"]/button[5]");
+        await refresh_button.click();
+        await refresh_button.click();
+
+        const new_secret = await getElementByXpath(driver, "//*[@id=\"root\"]/div/div[1]/div[2]/div[2]/div/div/div/div/div[1]/div[2]/div[3]/div[2]/div/div/div[1]/div[1]");
+        const new_secret_name = await new_secret.getText();
+
+        await expect(new_secret_name).toEqual("Test Secret");
     });
 
     /*
