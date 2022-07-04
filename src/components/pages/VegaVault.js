@@ -9,7 +9,7 @@ import './VegaVault.css';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 
-import {fetchsecrets, fetchallsecrets, deletesecret} from '../../service/VegaVault/Vault.js'
+import {fetchsecrets, fetchallsecrets, updatesecret, createsecret, deletesecret} from '../../service/VegaVault/Vault.js'
 import {Row, Col, Form} from 'react-bootstrap';
 
 
@@ -93,6 +93,26 @@ const VegaVault = (props) => {
 		props.history.push("/edit-secret-form");
 	};
 
+	const EditSecret = () => {
+
+		const selectedRow = gridRef.current.api.getSelectedRows();
+		var selectedID = selectedRow.length === 1 ? selectedRow[0].secretID : '';
+		console.log("Edited: " + selectedID);
+		console.log(userToken);
+		console.log(document.getElementById('secretFile').files[0]);
+		console.log(document.getElementById('secretName').value);
+
+		updatesecret(selectedID, document.getElementById('secretFile').files[0], document.getElementById('secretName').value, user.jwt);
+	}
+
+	const UplaodSecret= () => {
+		console.log(userToken);
+		console.log(document.getElementById('secretFile').files[0]);
+		console.log(document.getElementById('secretName').value);
+
+		createsecret(document.getElementById('secretFile').files[0], document.getElementById('secretName').value, user.jwt);
+	}
+
 	var page;
 	
 	if (user.role != "ROLE_STAFF" && user.role != "ROLE_USER" && user.role != "ROLE_ADMIN") {
@@ -111,7 +131,7 @@ const VegaVault = (props) => {
 				<h1>Vega Vault</h1>
 				<div id="button-box">
 					<button onClick={goToCreateSecret} className="button-blue" size = "sm">+ New Secret</button>
-					<button onClick={goToEditSecret} className="button-blue" size = "sm">Edit Secret</button>
+					{/*<button onClick={goToEditSecret} className="button-blue" size = "sm">Edit Secret</button>*/}
 					<button className="button-blue" size = "sm">Share Secret</button>
 					<button onClick={removeSelected} className="button-red" size = "sm">Delete Secret</button> <br/> <br/>
 					<button onClick={updateButton} className="button-blue" size = "sm">Refresh Table</button>
@@ -126,6 +146,29 @@ const VegaVault = (props) => {
 										 rowSelection={'single'}
 										 animateRows={true}>
 							</AgGridReact>
+						</div>
+					</div>
+					<div className="actionBar">
+						<div>
+							<h1>Upload Secret</h1>
+								<form action="" method="get">
+									<div>Secret Name:</div>
+									<input type="text" id="secretName" name="secretName"/><br/><br/>
+									<input type="file" id="secretFile" name="filename" className="inputFile"/><br/><br/>
+								</form>
+								<button className="button-blue" onClick={UplaodSecret}>Create New Secret</button><br/>
+						</div>
+						<div>
+							<h1>Edit Secret</h1>
+							<form action="" method="get">
+								<div>Secret Name:</div>
+								<input type="text" id="secretName" name="secretName"/><br/><br/>
+								<input type="file" id="secretFile" name="filename" className="inputFile"/><br/><br/>
+							</form>
+							<button className="button-blue" onClick={EditSecret}>Edit Selected Secret</button><br/>
+						</div>
+						<div>
+							<h1>Share Secret</h1>
 						</div>
 					</div>
 				</div>

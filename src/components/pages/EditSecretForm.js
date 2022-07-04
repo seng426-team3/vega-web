@@ -5,7 +5,6 @@ import {fetchsecrets, updatesecret} from "../../service/VegaVault/Vault";
 import {UserContext} from "../../auth/UserProvider";
 
 import './VegaVault.css';
-import secretId from "./VegaVault";
 
 
 const EditSecretForm = (props) => {
@@ -31,9 +30,10 @@ const EditSecretForm = (props) => {
     var page =
         <SimplePageLayout>
             <h1>Edit Secret</h1>
-
             <select>
-
+                {options.map((option) =>(
+                    <option value={option.value}>{option.label}</option>
+                ))}
             </select>
 
             <form action="" method="get">
