@@ -1,6 +1,8 @@
 .actionBar{
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    padding: 50px;
 }
 
 #button-box{

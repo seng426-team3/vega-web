@@ -9,7 +9,7 @@ import './VegaVault.css';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 
-import {fetchsecrets, fetchallsecrets, updatesecret, createsecret, deletesecret} from '../../service/VegaVault/Vault.js'
+import {fetchsecrets, fetchallsecrets, updatesecret, createsecret, deletesecret, sharesecret} from '../../service/VegaVault/Vault.js'
 import {Row, Col, Form} from 'react-bootstrap';
 
 
@@ -99,18 +99,26 @@ const VegaVault = (props) => {
 		var selectedID = selectedRow.length === 1 ? selectedRow[0].secretID : '';
 		console.log("Edited: " + selectedID);
 		console.log(userToken);
-		console.log(document.getElementById('secretFile').files[0]);
-		console.log(document.getElementById('secretName').value);
+		console.log(document.getElementById('editCreateFile').files[0]);
+		console.log(document.getElementById('editSecretName').value);
 
-		updatesecret(selectedID, document.getElementById('secretFile').files[0], document.getElementById('secretName').value, user.jwt);
+		updatesecret(selectedID, document.getElementById('editCreateFile').files[0], document.getElementById('editSecretName').value, user.jwt);
 	}
 
-	const UplaodSecret= () => {
+	const UploadSecret= () => {
 		console.log(userToken);
 		console.log(document.getElementById('secretFile').files[0]);
 		console.log(document.getElementById('secretName').value);
 
 		createsecret(document.getElementById('secretFile').files[0], document.getElementById('secretName').value, user.jwt);
+	}
+
+	const ShareSecret = () => {
+		const selectedRow = gridRef.current.api.getSelectedRows();
+		var selectedID = selectedRow.length === 1 ? selectedRow[0].secretID : '';
+		console.log("Shared: " + selectedID);
+		console.log(document.getElementById('usernameShare').value);
+		sharesecret(selectedID, document.getElementById('usernameShare').value, user.jwt);
 	}
 
 	var page;
@@ -130,11 +138,12 @@ const VegaVault = (props) => {
 			<SimplePageLayout>
 				<h1>Vega Vault</h1>
 				<div id="button-box">
-					<button onClick={goToCreateSecret} className="button-blue" size = "sm">+ New Secret</button>
-					{/*<button onClick={goToEditSecret} className="button-blue" size = "sm">Edit Secret</button>*/}
-					<button className="button-blue" size = "sm">Share Secret</button>
-					<button onClick={removeSelected} className="button-red" size = "sm">Delete Secret</button> <br/> <br/>
+					{/*<button onClick={goToCreateSecret} className="button-blue" size = "sm">+ New Secret</button>*/}
+					{/*/!*<button onClick={goToEditSecret} className="button-blue" size = "sm">Edit Secret</button>*!/*/}
+					{/*<button className="button-blue" size = "sm">Share Secret</button>*/}
 					<button onClick={updateButton} className="button-blue" size = "sm">Refresh Table</button>
+					<button onClick={removeSelected} className="button-red" size = "sm">Delete Secret</button>
+
 				</div>
 				<div style={containerStyle}>
 					<div style={{height: '475px', boxSizing: 'border-box'}}>
@@ -156,19 +165,24 @@ const VegaVault = (props) => {
 									<input type="text" id="secretName" name="secretName"/><br/><br/>
 									<input type="file" id="secretFile" name="filename" className="inputFile"/><br/><br/>
 								</form>
-								<button className="button-blue" onClick={UplaodSecret}>Create New Secret</button><br/>
+								<button className="button-blue" onClick={UploadSecret}>Create New Secret</button><br/>
 						</div>
 						<div>
 							<h1>Edit Secret</h1>
 							<form action="" method="get">
 								<div>Secret Name:</div>
-								<input type="text" id="secretName" name="secretName"/><br/><br/>
-								<input type="file" id="secretFile" name="filename" className="inputFile"/><br/><br/>
+								<input type="text" id="editSecretName" name="editSecretName"/><br/><br/>
+								<input type="file" id="editCreateFile" name="filename" className="inputFile"/><br/><br/>
 							</form>
 							<button className="button-blue" onClick={EditSecret}>Edit Selected Secret</button><br/>
 						</div>
 						<div>
 							<h1>Share Secret</h1>
+							<form action="" method="get">
+								<div>User to Share:</div>
+								<input type="text" id="usernameShare" name="usernameShare"/><br/><br/>
+							</form>
+							<button className="button-blue" onClick={ShareSecret}>Share Secret</button><br/>
 						</div>
 					</div>
 				</div>
