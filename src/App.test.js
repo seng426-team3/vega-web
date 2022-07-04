@@ -1,7 +1,8 @@
 import { webdriver, 
   driverBrowser, 
   reactAppURL,
-  screen} from "./tests/seleniumConfig";
+  screen,
+  getElementByXpath} from "./tests/seleniumConfig";
 const firefox = require('selenium-webdriver/firefox');
 
 let driver;
@@ -18,7 +19,8 @@ describe("Test each publicly accessible page is reachable", () => {
     await driver.get(reactAppURL + 'contactus');
 
     // When
-    const contact_form_submit_button_text = await driver.findElement(webdriver.By.xpath("//button[@class='btn btn-primary']")).getText();
+    const contact_form_submit_button = await getElementByXpath(driver, "//button[@class='btn btn-primary']");
+    const contact_form_submit_button_text = await contact_form_submit_button.getText()
 
     // Then
     // Assert contact form submit button exists
@@ -30,11 +32,12 @@ describe("Test each publicly accessible page is reachable", () => {
     await driver.get(reactAppURL + 'leadership');
 
     // When
-    const ceo_title = await driver.findElement(webdriver.By.xpath("//p[text()='CHIEF EXECUTIVE OFFICER']")).getText();
+    const ceo_title = await getElementByXpath(driver, "//p[text()='CHIEF EXECUTIVE OFFICER']");
+    const ceo_title_text = await ceo_title.getText();
 
     // Then
-    expect(ceo_title).not.toBeNull();
-    expect(ceo_title).toEqual('CHIEF EXECUTIVE OFFICER');
+    expect(ceo_title_text).not.toBeNull();
+    expect(ceo_title_text).toEqual('CHIEF EXECUTIVE OFFICER');
   });
 
   it("should access the news & events page", async () => {
@@ -42,10 +45,9 @@ describe("Test each publicly accessible page is reachable", () => {
     await driver.get(reactAppURL + 'news');
 
     // When
-    const static_news_title = await driver.findElement(webdriver.By.xpath("//h1[text()='IG Design Group Selects Vega NextGen for Cybersecurity']")).getText();
-
+    const static_news_title = await getElementByXpath(driver, "//h1[@class='news-title']");
     // Then
-    expect(static_news_title).toEqual('IG Design Group Selects Vega NextGen for Cybersecurity');
+    expect(static_news_title).not.toBeNull();
   });
 
   it("should access the platform page", async () => {
@@ -53,10 +55,11 @@ describe("Test each publicly accessible page is reachable", () => {
     await driver.get(reactAppURL + 'platform');
 
     // When
-    const page_title = await driver.findElement(webdriver.By.xpath("//h1[text()='Platform']")).getText();
+    const page_title = await getElementByXpath(driver, "//h1[text()='Platform']");
+    const page_title_text = await page_title.getText();
 
     // Then
-    expect(page_title).toEqual('Platform');
+    expect(page_title_text).toEqual('Platform');
   });
 
   it("should access the login page", async () => {
@@ -64,7 +67,8 @@ describe("Test each publicly accessible page is reachable", () => {
     await driver.get(reactAppURL + 'login');
 
     // When
-    const username_input_label = await driver.findElement(webdriver.By.xpath("//label[text()='USERNAME']")).getText();
+    const username_input = await getElementByXpath(driver, "//label[text()='USERNAME']");
+    const username_input_label = await username_input.getText();
 
     // Then
     expect(username_input_label).toEqual('USERNAME');
@@ -75,10 +79,11 @@ describe("Test each publicly accessible page is reachable", () => {
     await driver.get(reactAppURL + 'signup');
 
     // When
-    const create_account_title = await driver.findElement(webdriver.By.xpath("//h2[text()='Create an account']")).getText();
+    const create_account_title = await getElementByXpath(driver, "//h2[text()='Create an account']");
+    const create_account_title_text = await create_account_title.getText();
 
     // Then
-    expect(create_account_title).toEqual('Create an account');
+    expect(create_account_title_text).toEqual('Create an account');
   });
 
   it("should access the about us page", async () => {
@@ -86,10 +91,11 @@ describe("Test each publicly accessible page is reachable", () => {
     await driver.get(reactAppURL + 'aboutus');
 
     // When
-    const username_input_label = await driver.findElement(webdriver.By.xpath("//h1[text()='Vega Absolute']")).getText();
+    const username_input_label = await getElementByXpath(driver, "//h1[text()='Vega Absolute']");
+    const username_input_label_text = await username_input_label.getText();
 
     // Then
-    expect(username_input_label).toEqual('Vega Absolute');
+    expect(username_input_label_text).toEqual('Vega Absolute');
   });
 });
 

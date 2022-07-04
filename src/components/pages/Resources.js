@@ -42,7 +42,7 @@ const Resources = (props) => {
 			.then(res => {
 				console.log("Response", res);
 
-				if (res == "File uploaded Successfully") {
+				if (res === "File uploaded Successfully") {
 					setIsFileUploadSuccessfulAert(true);
 					return;
 				}
@@ -64,14 +64,14 @@ const Resources = (props) => {
 			return listOfFiles.map((file) => 
 				<tr id={"file-entry" + file} key={"file-entry" + file}>
 					<td id={"filename-" + file} key={"filename-" + file}>
-						<a href="#" onClick={() => fetchFileData(file)}>{file}</a>
+						<a id={"filename-link-" + file} key={"filename-link-" + file} href="#" onClick={() => fetchFileData(file)}>{file}</a>
 					</td>
 				</tr>
 			);
 		}
 	}
 
-	if (user.role == "ROLE_ADMIN"){
+	if (user.role === "ROLE_ADMIN"){
 		uploadHTML = (<Row>
 				<Col className="mx-auto" xs={6}>
 					<Form.Group controlId="formFile" className="mb-3">
@@ -109,13 +109,13 @@ const Resources = (props) => {
 					</div>	
 				</Alert>
 			}
-			{ user.role == "ROLE_ADMIN" ? (
+			{ user.role === "ROLE_ADMIN" ? (
 				uploadHTML
 			) : (
 				<p id="cannot-upload-notice">You are not allowed to upload files as staff.</p>
 			)
 			}
-			{ (user.role == "ROLE_ADMIN" || user.role == "ROLE_STAFF") && 
+			{ (user.role === "ROLE_ADMIN" || user.role === "ROLE_STAFF") && 
 				<Row mt="5">
 					<Table id="resources-file-table">
 						<thead>
@@ -129,10 +129,10 @@ const Resources = (props) => {
 					</Table>
 				</Row>
 			}
-			{ user.role == "ROLE_ADMIN" || user.role == "ROLE_STAFF" ? (
+			{ user.role === "ROLE_ADMIN" || user.role === "ROLE_STAFF" ? (
 				<Row>
 					<h3>Selected File Content</h3>
-					<Col>
+					<Col id="file-content" key="file-content">
 						{content}
 					</Col>
 				</Row>	

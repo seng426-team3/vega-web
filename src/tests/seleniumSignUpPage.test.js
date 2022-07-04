@@ -12,13 +12,28 @@ let driver;
 // Use the same email across tests
 const email = 'tester'+ Math.random()+  '@venus.com';
 
-describe("User must be able to sign up for an account from the login page and it show up in the admin page (user story 14 in RSD)", () => {
+/*
+    The selenium tests here are described as new user stories in the milestone 3 report.
+    Feature: Visitor must be able to sign up for an account from the login page and have it show up in the admin page
+*/
+describe("Visitor must be able to sign up for an account from the login page and have it show up in the admin page (user story 14 in RSD)", () => {
     beforeEach(() => {
         driver = new webdriver.Builder().forBrowser(driverBrowser)
         .setFirefoxOptions(new firefox.Options().headless().windowSize(screen)) // comment this line to run in browser locally
         .build();
     });
 
+    /*
+    Scenario (US-2-30) (User story 2 from RSD): User should sign up for an account when all form fields are filled in
+        Given I am a user
+        And I am on the “Login/Signup” page
+        When I click the “Sign Up” button
+        And I fill in the form details
+        And I click submit
+        Then a confirmation message appears stating that the account is now under
+        review
+        And the new account appears under the Admin page awaiting activation
+    */
     it("should allow user to create new account when all form fields filled in", async () => {
         // Given
         await driver.get(reactAppURL + "login");
@@ -50,6 +65,44 @@ describe("User must be able to sign up for an account from the login page and it
         await expect(account_created_alert_text).toEqual('You\'ve successfully registered for an account\nIt is currently under review. Please check back later to see if it is approved.');
     });
 
+    /*
+    Scenario (US-2-43): A user tries to log in with unactivated account
+        Given I am a user with an unactivated account
+        And I am on the “Login/Signup” page
+        When I input my username/email address
+        And I input my password
+        And I click submit
+        Then a message appears stating that the account is still under review
+    */
+    it("should show warning and fail when invalid user tries to login", async () => {
+        // Given
+        await driver.get(reactAppURL + "login");
+
+        // When
+        const username_input_textbox = await getElementByXpath(driver, "//input[@id='login-form-username']");
+        const password_input_textbox = await getElementByXpath(driver, "//input[@id='login-form-password']");
+        const login_form_submit_btn = await getElementByXpath(driver, "//button[@id='login-form-submit-button']");
+
+        await username_input_textbox.sendKeys(email);
+        await password_input_textbox.sendKeys('pass');
+        await login_form_submit_btn.click();
+
+        // Then
+        const failed_login_alert = await getElementByXpath(driver, "//div[@id='invalid-user-alert']");
+        await expect(failed_login_alert).not.toBeNull();
+    });
+
+    /*
+    Scenario (US-2-31) (User story 3 from RSD): Admin activates new user account
+        Given I am an admin
+        And I am logged into my account
+        And I am on the “Admin” page
+        When I select a new user waiting for activation
+        And I select the role “User”
+        And I click “Enable this User”
+        Then a confirmation message appears stating the user was activated
+        And the user’s account now has access to services
+    */
     it("should allow admin to access the admin page and activate the new user", async () => {
         // Given
         await driver.get(reactAppURL + "login");
@@ -86,6 +139,16 @@ describe("User must be able to sign up for an account from the login page and it
         await expect(new_user_enabled_alert).not.toBeNull();
     });
 
+    /*
+    Scenario (US-2-32): Newly enabled user must be able to log in
+        Given I am a registered user
+        And I have just been enabled by the admin
+        When I go to “Login” page
+        And I input my username/email address
+        And I input my password
+        And I click “Submit”
+        Then I am logged in successfully if my credentials are correct
+    */
     it("should login new enabled user when username and password are correct", async () => {
         // Given
         await driver.get(reactAppURL + "login");
@@ -111,6 +174,16 @@ describe("User must be able to sign up for an account from the login page and it
         await expect(logged_in_username_text).toEqual(email);
     });
 
+    /*
+    Scenario (US-2-33): User should not be able to create the same account twice
+        Given I am a registered user (may or may not be enabled)
+        And I already have an account
+        When I click the “Sign Up” button
+        And I fill in the form details
+        And I click submit
+        Then a confirmation message appears stating that an error occurred while creating the application
+        And no new accounts are created 
+     */
     it("should not allow user to create the same account twice", async () => {
         // Given
         await driver.get(reactAppURL + "login");
@@ -143,6 +216,16 @@ describe("User must be able to sign up for an account from the login page and it
     
     });
 
+    /*
+    Scenario (US-2-34): User should not be able to create the same account with missing fields
+        Given I am a user
+        And I am on the “Login/Signup” page
+        When I click the “Sign Up” button
+        And I fill in the form details but with some missing fields
+        And I click submit
+        Then an error message shows up indicating the missing information required
+        And no new accounts are created    
+    */
     it("should not allow user to create account with missing fields", async () => {
         // Given
         await driver.get(reactAppURL + "login");

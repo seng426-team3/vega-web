@@ -1,7 +1,12 @@
 import NewsDetails from '../molecules/NewsDetails.js';
 import {Row} from 'react-bootstrap';
-const ListNewsDetails = ({listOfNews}) => {
-	const generateHTMLForListOfNews = listOfNews.map((news) => <NewsDetails news={news} />)
+const ListNewsDetails = ({listOfNews, setNews}) => {
+	let generateHTMLForListOfNews; 
+	
+	console.log(listOfNews);
+	if (listOfNews.length) {
+		generateHTMLForListOfNews = listOfNews.slice(0).reverse().map((news) => <NewsDetails news={news} setNews={setNews}/>);
+	}
 	return (
 		<Row>
 			{generateHTMLForListOfNews}
