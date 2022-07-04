@@ -14,7 +14,7 @@ let driver;
 describe("Users must be able to fetch their secrets, use CRUD operations on them, and share them. Admins must be able to fetch all secrets", () => {
     beforeEach(() => {
         driver = new webdriver.Builder().forBrowser(driverBrowser)
-        //.setFirefoxOptions(new firefox.Options().headless().windowSize(screen)) // comment this line to run in browser locally
+        .setFirefoxOptions(new firefox.Options().headless().windowSize(screen)) // comment this line to run in browser locally
         .build();
     });
 
