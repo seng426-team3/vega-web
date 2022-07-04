@@ -9,54 +9,17 @@ import './VegaVault.css';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 
-import {fetchsecrets, createsecret} from '../../service/VegaVault/Vault.js'
+import {fetchsecrets, fetchallsecrets, createsecret} from '../../service/VegaVault/Vault.js'
 import {Row, Col, Form} from 'react-bootstrap';
 
 const VegaVault = (props) => {
 	const {user} = useContext(UserContext);
 
-	async function getSecrets(){
+	function getSecrets(){
 		var listOfSecrets;
 
-		try {
-			listOfSecrets = await fetchsecrets(user.jwt);
-			console.log(listOfSecrets);
-		}
-		catch(err) {
-			console.log(err.message);
-			listOfSecrets = [
-				{Name: "Secret stuff", CreationDate: "2022-06-27", Data: "txt"}, {
-					Name: "Dog",
-					CreationDate: "2020-05-25",
-					Data: "png"
-				},
-				{Name: "Passwords", CreationDate: "2013-03-16", Data: "txt"}, {
-					Name: "Holiday Hawaii",
-					CreationDate: "2019-02-20",
-					Data: "png"
-				},
-				{Name: "CSC426Report1", CreationDate: "2022-06-05", Data: "txt"}, {
-					Name: "Cat",
-					CreationDate: "2020-05-26",
-					Data: "png"
-				},
-				{Name: "CSC426Report2", CreationDate: "2022-06-19", Data: "txt"}, {
-					Name: "Holiday Spain",
-					CreationDate: "2010-04-14",
-					Data: "png"
-				},
-				{Name: "CSC426Report3", CreationDate: "2022-07-02", Data: "txt"}, {
-					Name: "Meme",
-					CreationDate: "2022-06-27",
-					Data: "png"
-				},
-				{Name: "Final Exam", CreationDate: "2021-12-15", Data: "txt"}, {
-					Name: "Camping 2021",
-					CreationDate: "2021-07-01",
-					Data: "png"
-				}
-			];
-		}
+		listOfSecrets = fetchallsecrets(user.jwt);
+
 		return listOfSecrets;
 	}
 
@@ -73,11 +36,16 @@ const VegaVault = (props) => {
 	};
 
 	const listOfSecrets = getSecrets();
-
-	console.log(listOfSecrets);
-
+	var arrayVal;
+	listOfSecrets.then(function (result) {
+		arrayVal = result;
+		console.log(arrayVal);
+		return result;
+	});
+	console.log(arrayVal);
 	const gridRef = useRef(null);
-	const [rowData, setRowData] = useState(listOfSecrets);
+
+	const [rowData, setRowData] = useState([]);
 
 	const containerStyle = useMemo(() => ({width: "100%", height: "100%"}), []);
 	const gridStyle = useMemo(() => ({width: "100%", height: "100%"}), []);
@@ -95,18 +63,23 @@ const VegaVault = (props) => {
 		{field: 'fileType', width: 100}
 	]);
 
-	const removeSelected = useCallback(() => {
+	// const removeSelected = useCallback(() => {
+	//
+	// 	const selectedRowNodes = gridRef.current.api.getSelectedNodes();
+	// 	const selectedIDs = selectedRowNodes.map(function (rowNode){
+	// 		return rowNode.id;
+	// 	});
+	// 	const filterData = rowData.filter(function (dataItem){
+	// 		return selectedIDs.indexOf(dataItem.Name) < 0;
+	// 	});
+	// 	setRowData(filterData);
+	//
+	// }, [rowData]);
 
-		const selectedRowNodes = gridRef.current.api.getSelectedNodes();
-		const selectedIDs = selectedRowNodes.map(function (rowNode){
-			return rowNode.id;
-		});
-		const filterData = rowData.filter(function (dataItem){
-			return selectedIDs.indexOf(dataItem.Name) < 0;
-		});
-		setRowData(filterData);
-
-	}, [rowData]);
+	const updateButton = () => {
+		console.log(arrayVal);
+		setRowData(arrayVal);
+	}
 
 	var page;
 	
@@ -128,7 +101,7 @@ const VegaVault = (props) => {
 					<button onClick={goToCreateSecret} className="button-blue" size = "sm">+ New Secret</button>
 					<button onClick={goToEditSecret} className="button-blue" size = "sm">Edit Secret</button>
 					<button className="button-blue" size = "sm">Share Secret</button>
-					<button onClick={removeSelected} className="button-red" size = "sm">Delete Secret</button>
+					<button onClick={updateButton} className="button-red" size = "sm">Delete Secret</button>
 				</div>
 				<div style={containerStyle}>
 					<div style={{height: '475px', boxSizing: 'border-box'}}>
