@@ -36,7 +36,7 @@ export function updatesecret(secretid, secretname, file, token){
         secretnameParam = "&secretname=" + secretname;
     }
 
-	return doPostFile(process.env.REACT_APP_API_URL + "/api/venus/vault/updatesecret?secretid=" 
+	return doPostFile(process.env.REACT_APP_API_URL + "/api/venus/vault/secretupdate?secretid=" 
         + secretid + secretnameParam, formData, token);
 }
 
