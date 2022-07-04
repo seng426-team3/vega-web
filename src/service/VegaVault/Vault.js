@@ -41,8 +41,9 @@ export function updatesecret(secretid, secretname, file, token){
 }
 
 export function deletesecret(secretid, token){
-
-	return doPostFile(process.env.REACT_APP_API_URL + "/api/venus/vault/deletesecret?secretid=" 
+    console.log(secretid);
+    console.log(token);
+	return doPostFile(process.env.REACT_APP_API_URL + "/api/venus/vault/deletesecret?secretid="
         + secretid, undefined, token);
 }
 

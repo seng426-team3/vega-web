@@ -1,27 +1,48 @@
 import SimplePageLayout from "../templates/SimplePageLayout.js";
 import {withRouter} from "react-router-dom";
-import React from "react";
-import {updatesecret} from "../../service/VegaVault/Vault";
+import React, {useContext} from "react";
+import {fetchsecrets, updatesecret} from "../../service/VegaVault/Vault";
+import {UserContext} from "../../auth/UserProvider";
+
+import './VegaVault.css';
+import secretId from "./VegaVault";
 
 
 const EditSecretForm = (props) => {
+
+    const {user} = useContext(UserContext);
 
     const goToVault = () => {
         props.history.push("/vega-vault");
     };
 
+    const testUpload = () => {
+        console.log(document.getElementById('secretFile').files[0]);
+        console.log(document.getElementById('secretName').value);
+        console.log(secretId);
+
+        // updatesecret(secretId, document.getElementById('secretFile').files[0], document.getElementById('secretName').value, user.jwt);
+
+        // goToVault();
+    }
+
+    const secretIds = fetchsecrets(user.jwt);
+
     var page =
         <SimplePageLayout>
             <h1>Edit Secret</h1>
-            <form action="">
+
+            <select>
+
+            </select>
+
+            <form action="" method="get">
                 <div>Secret Name:</div>
                 <input type="text" id="secretName" name="secretName"/><br/><br/>
                 <input type="file" id="secretFile" name="filename" className="inputFile"/><br/><br/>
-                <input type="submit" onClick={goToVault}/>
             </form>
+            <button className="blueButton" onClick={testUpload}>testUpload</button>
         </SimplePageLayout>;
-
-    updatesecret(document.getElementById("secretFile"), document.getElementById("secretName").value, user.jwt);
 
     return (page);
 }

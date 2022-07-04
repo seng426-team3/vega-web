@@ -1,7 +1,7 @@
 import SimplePageLayout from '../templates/SimplePageLayout.js';
 import {Button} from 'react-bootstrap';
 import {UserContext} from '../../auth/UserProvider.js';
-import {useCallback, useContext, useMemo, useRef, useState} from 'react';
+import {useCallback, useContext, useMemo, useRef, useState, createContext} from 'react';
 import {withRouter} from 'react-router-dom';
 import { AgGridReact } from 'ag-grid-react';
 import './VegaVault.css';
@@ -12,17 +12,19 @@ import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import {fetchsecrets, fetchallsecrets, deletesecret} from '../../service/VegaVault/Vault.js'
 import {Row, Col, Form} from 'react-bootstrap';
 
+
 const VegaVault = (props) => {
 	const {user} = useContext(UserContext);
-
+	var userToken = user.jwt;
 	function getSecrets(){
 		var listOfSecrets = [];
 		if(user.role === "ROLE_ADMIN") {
-			listOfSecrets = fetchallsecrets(user.jwt);
+			console.log(user.jwt)
+			listOfSecrets = fetchallsecrets(userToken);
 
 		}
 		else{
-			listOfSecrets = fetchsecrets(user.jwt);
+			listOfSecrets = fetchsecrets(userToken);
 		}
 		return listOfSecrets;
 	}
@@ -35,10 +37,6 @@ const VegaVault = (props) => {
 		props.history.push("/secret-form");
 	};
 
-	const goToEditSecret = () => {
-		props.history.push("/edit-secret-form");
-	};
-
 	const listOfSecrets = getSecrets();
 	var arrayVal;
 	listOfSecrets.then(function (result) {
@@ -47,7 +45,7 @@ const VegaVault = (props) => {
 		return result;
 	});
 	console.log(arrayVal);
-	const gridRef = useRef();
+	const gridRef = useRef(arrayVal);
 
 	const [rowData, setRowData] = useState([]);
 
@@ -67,19 +65,33 @@ const VegaVault = (props) => {
 		{field: 'fileType', width: 100},
 		{field: 'secretID', width: 100, hide: true}
 	]);
-
-	const removeSelected = useCallback(() => {
+	console.log(user.jwt);
+	const removeSelected = () => {
 
 		const selectedRow = gridRef.current.api.getSelectedRows();
 		var selectedID = selectedRow.length === 1 ? selectedRow[0].secretID : '';
 		console.log("Deleted: " + selectedID);
-		deletesecret(selectedID, user.jwt);
-	}, []);
+		console.log(userToken);
+		deletesecret(String(selectedID), userToken);
+
+		updateButton();
+	}
 
 	const updateButton = () => {
 		console.log(arrayVal);
 		setRowData(arrayVal);
 	}
+
+	const getSelected = () => {
+		const selectedRow = gridRef.current.api.getSelectedRows();
+		var selectedID = selectedRow.length === 1 ? selectedRow[0].secretID : '';
+
+		return selectedID;
+	}
+
+	const goToEditSecret = () => {
+		props.history.push("/edit-secret-form");
+	};
 
 	var page;
 	
@@ -122,4 +134,5 @@ const VegaVault = (props) => {
 
 	return (page);
 }
+
 export default withRouter(VegaVault);
