@@ -83,7 +83,7 @@ const VegaVault = (props) => {
 
 	var page;
 	
-	if (!(user.role !== "ROLE_STAFF" || user.role !== "ROLE_USER" || user.role !== "ROLE_ADMIN")) {
+	if (user.role != "ROLE_STAFF" && user.role != "ROLE_USER" && user.role != "ROLE_ADMIN") {
 		page = 
 			<SimplePageLayout>
 				<h1>Vega Vault</h1>
