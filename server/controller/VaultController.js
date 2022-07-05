@@ -1,5 +1,5 @@
 import express from 'express';
-import {fetchSecrets, fetchAllSecrets, createSecret, readSecret, updateSecret, deleteSecret} from '../services/VaultRequestAPI.js';
+import {fetchSecrets, fetchAllSecrets, createSecret, readSecret, updateSecret, deleteSecret, shareSecret} from '../services/VaultRequestAPI.js';
 
 let router = express();
 
