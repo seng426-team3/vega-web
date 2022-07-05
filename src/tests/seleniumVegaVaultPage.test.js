@@ -14,7 +14,7 @@ let driver;
 describe("Users must be able to fetch their secrets, use CRUD operations on them, and share them. Admins must be able to fetch all secrets", () => {
     beforeEach(() => {
         driver = new webdriver.Builder().forBrowser(driverBrowser)
-        //.setFirefoxOptions(new firefox.Options().headless().windowSize(screen)) // comment this line to run in browser locally
+        .setFirefoxOptions(new firefox.Options().headless().windowSize(screen)) // comment this line to run in browser locally
         .build();
     });
 
@@ -104,7 +104,7 @@ describe("Users must be able to fetch their secrets, use CRUD operations on them
 
         // Then
         const secret_name_field = await getElementByXpath(driver, "//*[@id=\"secretName\"]");
-        await secret_name_field.sendKeys("Test Secret");
+        await secret_name_field.sendKeys("Super Secret");
         
         const file_upload_select = await getElementByXpath(driver, "//*[@id=\"secretFile\"]");
         await file_upload_select.sendKeys(process.cwd() + '/src/tests/testfile.txt');
@@ -112,7 +112,7 @@ describe("Users must be able to fetch their secrets, use CRUD operations on them
         const upload_button = await getElementByXpath(driver, "//*[@id=\"root\"]/div/div[1]/div[2]/div[2]/div[2]/div[1]/button");
 
         await upload_button.sendKeys(Key.ARROW_DOWN);
-        
+
         await upload_button.click();
 
         const refresh_button = await getElementByXpath(driver, "//*[@id=\"button-box\"]/button[1]");
@@ -122,7 +122,7 @@ describe("Users must be able to fetch their secrets, use CRUD operations on them
         const new_secret = await getElementByXpath(driver, "//*[@id=\"root\"]/div/div[1]/div[2]/div[2]/div/div/div/div/div[1]/div[2]/div[3]/div[2]/div/div/div[1]/div[1]");
         const new_secret_name = await new_secret.getText();
 
-        await expect(new_secret_name).toEqual("Test Secret");
+        await expect(new_secret_name).toEqual("Super Secret");
     });
 
     /*
@@ -183,7 +183,23 @@ describe("Users must be able to fetch their secrets, use CRUD operations on them
         await driver.get(reactAppURL + "vega-vault");
 
         // Then
-        // TO-DO write deletion test
+        const refresh_button = await getElementByXpath(driver, "//*[@id=\"button-box\"]/button[1]");
+        await refresh_button.click();
+        await refresh_button.click();
+
+        const secret_entry = await getElementByXpath(driver, "//*[@id=\"root\"]/div/div[1]/div[2]/div[2]/div[1]/div/div/div/div[1]/div[2]/div[3]/div[2]/div/div/div[1]/div[1]");
+        await secret_entry.click();
+
+        const delete_button = await getElementByXpath(driver, "//*[@id=\"button-box\"]/button[2]");
+        await delete_button.click();
+
+        await refresh_button.click();
+        await refresh_button.click();
+
+        const old_secret = await getElementByXpath(driver, "//*[@id=\"root\"]/div/div[1]/div[2]/div[2]/div[1]/div/div/div/div[1]/div[2]/div[3]/div[2]/div/div/div/div[1]")
+        const old_secret_name = await old_secret.getText();
+
+        await expect(old_secret_name).toEqual("Super Secret");
     });
 
     /* 
