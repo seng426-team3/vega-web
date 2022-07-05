@@ -4,12 +4,21 @@ import {UserContext} from '../../auth/UserProvider.js';
 import {useCallback, useContext, useMemo, useRef, useState, createContext} from 'react';
 import {withRouter} from 'react-router-dom';
 import { AgGridReact } from 'ag-grid-react';
+import fileDownload from 'js-file-download'
 import './VegaVault.css';
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 
-import {fetchsecrets, fetchallsecrets, updatesecret, createsecret, deletesecret, sharesecret} from '../../service/VegaVault/Vault.js'
+import {
+	fetchsecrets,
+	fetchallsecrets,
+	updatesecret,
+	createsecret,
+	deletesecret,
+	sharesecret,
+	readsecret
+} from '../../service/VegaVault/Vault.js'
 import {Row, Col, Form} from 'react-bootstrap';
 
 
@@ -126,6 +135,34 @@ const VegaVault = (props) => {
 		document.getElementById('usernameShare').value = null;
 	}
 
+	const downloadButton = () => {
+		const selectedRow = gridRef.current.api.getSelectedRows();
+		var selectedID = selectedRow.length === 1 ? selectedRow[0].secretID : '';
+		var selectedName = selectedRow.length === 1 ? selectedRow[0].secretName : '';
+		var selectedType = selectedRow.length === 1 ? selectedRow[0].fileType : '';
+		console.log("Download: " + selectedID);
+		readsecret(selectedID, user.jwt).then((result) => {
+			console.log(result);
+			fileDownload(result, selectedName + "" + selectedType);
+		});
+	}
+
+	const [selected, setSelected] = useState(false);
+
+	const enableButtons = (event) => {
+		console.log("Checking button");
+		const selectedRow = gridRef.current.api.getSelectedRows();
+		// var selectedID = selectedRow.length === 1 ? selectedRow[0].secretID : '';
+		if (selectedRow.length === 1){
+			console.log("Enable button");
+			setSelected(true);
+		}
+		else{
+			console.log("Disabled button");
+			setSelected(false);
+		}
+	}
+
 	var page;
 	
 	if (user.role != "ROLE_STAFF" && user.role != "ROLE_USER" && user.role != "ROLE_ADMIN") {
@@ -147,6 +184,7 @@ const VegaVault = (props) => {
 					{/*/!*<button onClick={goToEditSecret} className="button-blue" size = "sm">Edit Secret</button>*!/*/}
 					{/*<button className="button-blue" size = "sm">Share Secret</button>*/}
 					<button onClick={updateButton} className="button-blue" size = "sm">Refresh Table</button>
+					<button onClick={downloadButton} className="button-blue" size = "sm" disabled={!selected}>Download Selected</button>
 					<button onClick={removeSelected} className="button-red" size = "sm">Delete Secret</button>
 
 				</div>
@@ -158,6 +196,7 @@ const VegaVault = (props) => {
 										 columnDefs={columnDefs}
 										 defaultColDef={defaultColDef}
 										 rowSelection={'single'}
+										 onSelectionChanged={enableButtons}
 										 animateRows={true}>
 							</AgGridReact>
 						</div>
@@ -170,7 +209,7 @@ const VegaVault = (props) => {
 									<input type="text" id="secretName" name="secretName"/><br/><br/>
 									<input type="file" id="secretFile" name="filename" className="inputFile"/><br/><br/>
 								</form>
-								<button className="button-blue" onClick={UploadSecret}>Create New Secret</button><br/>
+								<button id = "CreateButton" className="button-blue" onClick={UploadSecret}>Create New Secret</button><br/>
 						</div>
 						<div>
 							<h1>Edit Secret</h1>
@@ -179,7 +218,7 @@ const VegaVault = (props) => {
 								<input type="text" id="editSecretName" name="editSecretName"/><br/><br/>
 								<input type="file" id="editCreateFile" name="filename" className="inputFile"/><br/><br/>
 							</form>
-							<button className="button-blue" onClick={EditSecret}>Edit Selected Secret</button><br/>
+							<button id = "EditButton" className="button-blue" onClick={EditSecret} disabled={!selected}>Edit Selected Secret</button><br/>
 						</div>
 						<div>
 							<h1>Share Secret</h1>
@@ -187,7 +226,7 @@ const VegaVault = (props) => {
 								<div>User to Share:</div>
 								<input type="text" id="usernameShare" name="usernameShare"/><br/><br/>
 							</form>
-							<button className="button-blue" onClick={ShareSecret}>Share Secret</button><br/>
+							<button id = "ShareButton" className="button-blue" onClick={ShareSecret} disabled={!selected}>Share Secret</button><br/>
 						</div>
 					</div>
 				</div>
