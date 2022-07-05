@@ -93,7 +93,7 @@ router.post("/deletesecret", (req, res) => {
 router.post("/sharesecret", (req, res) => {
 	console.log("Request: Share secret")
 	shareSecret(`${process.env.API_URL}/venus/vault/sharesecret?secretid=` 
-		+ req.query.secretid + "&targetuser=" + req.targetuser, req.headers)
+		+ req.query.secretid + "&targetuser=" + req.query.targetuser, req.headers)
 	.then(response => {
 		console.log("Response", response);
 		res.send(response);
