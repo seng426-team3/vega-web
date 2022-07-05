@@ -2,6 +2,7 @@ import user from './auth/UserManager.js';
 import auth from './auth/AuthenticationManager.js';
 import fileUploader from './controller/FileUploadController.js';
 import adminPanel from './controller/AdminPanelController.js'
+import vault from './controller/VaultController.js';
 import express from 'express';
 import { config } from 'dotenv';
 import cors from 'cors';
@@ -32,7 +33,8 @@ app.get('/', (req, res) => {
 
 app.use("/api/login", auth);
 app.use("/api/signup", user);
-app.use("/api/venus", fileUploader)
+app.use("/api/venus", fileUploader);
+app.use("/api/venus/vault", vault);
 app.use("/api/venus/news", news)
 app.use("/api/venus/contactus", contactus)
 app.use("/api/venus/admin", adminPanel)

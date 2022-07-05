@@ -7,6 +7,11 @@ export async function doPost(url, data){
 	return await handleResponse(response);
 }
 
+export async function doTokenPost(url, data, token){
+	const response = await fetch(url, createRequestOptions('POST', data, token));
+	return await handleResponse(response);
+}
+
 export async function doPost2(url, data, token){
 	const response = await fetch(url, createRequestOptions('POST', data, token));
 	return await handleResponse(response);
