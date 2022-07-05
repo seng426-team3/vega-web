@@ -24,7 +24,7 @@ export function readSecret(url, headers){
 export function updateSecret(url, data, headers){
 	console.log(url);
 
-	if (data.file.name != undefined) {
+	if (data != null) {
 		return doPostFile(url, data, headers);
 	}
 	return doTokenPost(url, undefined, headers['authorization'])

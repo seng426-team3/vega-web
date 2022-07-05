@@ -102,7 +102,7 @@ const VegaVault = (props) => {
 		console.log(document.getElementById('editCreateFile').files[0]);
 		console.log(document.getElementById('editSecretName').value);
 
-		updatesecret(selectedID, document.getElementById('editCreateFile').files[0], document.getElementById('editSecretName').value, user.jwt);
+		updatesecret(selectedID, document.getElementById('editSecretName').value, document.getElementById('editCreateFile').files[0], user.jwt);
 		document.getElementById('editSecretName').value = null;
 		document.getElementById('editCreateFile').value = null;
 	}
