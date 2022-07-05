@@ -76,7 +76,6 @@ describe("Users must be able to fetch their secrets, use CRUD operations on them
         await driver.get(reactAppURL + "vega-vault");
 
         // Then
-        // TO-DO write creation test
         const refresh_button = await getElementByXpath(driver, "//*[@id=\"button-box\"]/button[1]");
         await refresh_button.click();
 
@@ -220,7 +219,40 @@ describe("Users must be able to fetch their secrets, use CRUD operations on them
         await driver.get(reactAppURL + "vega-vault");
 
         // Then
-        // TO-DO write sharing test
+        let refresh_button = await getElementByXpath(driver, "//*[@id=\"button-box\"]/button[1]");
+        await refresh_button.click();
+        await refresh_button.click();
+
+        const share_secret = await getElementByXpath(driver, "//*[@id=\"root\"]/div/div[1]/div[2]/div[2]/div[1]/div/div/div/div[1]/div[2]/div[3]/div[2]/div/div/div/div[1]");
+        
+        await share_secret.click();
+
+        const share_field = await getElementByXpath(driver, "//*[@id=\"usernameShare\"]");
+        await share_field.sendKeys("jonoliver@venus.com");
+
+        const share_button = await getElementByXpath(driver, "//*[@id=\"root\"]/div/div[1]/div[2]/div[2]/div[2]/div[3]/button");
+
+        await share_button.sendKeys(Key.ARROW_DOWN);
+
+        await share_button.click();
+
+        await driver.get(reactAppURL + "account");
+
+        const signout = await getElementByXpath(driver, "//*[@id=\"signout-button\"]");
+        await signout.click();
+
+        // Sign in as who we shared with
+        await signIn("jonoliver@venus.com");
+
+        await driver.get(reactAppURL + "vega-vault");
+
+        refresh_button = await getElementByXpath(driver, "//*[@id=\"button-box\"]/button[1]");
+        await refresh_button.click();
+
+        const secret_entry = await getElementByXpath(driver, "//*[@id=\"root\"]/div/div[1]/div[2]/div[2]/div[1]/div/div/div/div[1]/div[2]/div[3]/div[2]/div/div/div/div[1]");
+        const secret_name = await secret_entry.getText();
+
+        await expect(secret_name).toEqual("Super Secret");
     });
 
     /*
