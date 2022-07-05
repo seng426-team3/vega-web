@@ -31,11 +31,17 @@ export function updatesecret(secretid, secretname, file, token){
 
     if (file != undefined && file != null) {
         formData.append("file", file);
-        console.log("Empty file");
+        console.log("File received");
     }
-    if (secretname != undefined && secretname != null) {
+    else {
+        console.log("No file given");
+    }
+    if (secretname != undefined && secretname != null && secretname != "") {
         secretnameParam = "&secretname=" + secretname;
-        console.log("Empty name");
+        console.log("Name Received");
+    }
+    else {
+        console.log("No secret name given");
     }
 
 	return doPostFile(process.env.REACT_APP_API_URL + "/api/venus/vault/secretupdate?secretid=" 
