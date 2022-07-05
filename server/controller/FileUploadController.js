@@ -1,4 +1,3 @@
-import bodyParser from 'body-parser';
 import express from 'express';
 import {uploader, listFiles, fetchcontent} from '../services/FileHandlerAPI.js';
 import fileUpload from 'express-fileupload';

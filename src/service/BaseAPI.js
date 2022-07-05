@@ -58,7 +58,7 @@ export async function doPost2(url, data, token) {
 
 export async function doPostFile(url, data, token) {
   console.log(getUserToken());
-  console.debug('Request data:', data);
+  // console.debug('Request data:', data);
   const response = await fetch(url, {
     method: 'POST',
     headers:{
