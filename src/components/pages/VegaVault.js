@@ -103,6 +103,8 @@ const VegaVault = (props) => {
 		console.log(document.getElementById('editSecretName').value);
 
 		updatesecret(selectedID, document.getElementById('editCreateFile').files[0], document.getElementById('editSecretName').value, user.jwt);
+		document.getElementById('editSecretName').value = null;
+		document.getElementById('editCreateFile').value = null;
 	}
 
 	const UploadSecret= () => {
@@ -111,6 +113,8 @@ const VegaVault = (props) => {
 		console.log(document.getElementById('secretName').value);
 
 		createsecret(document.getElementById('secretFile').files[0], document.getElementById('secretName').value, user.jwt);
+		document.getElementById('secretName').value = null;
+		document.getElementById('secretFile').value = null;
 	}
 
 	const ShareSecret = () => {
@@ -119,6 +123,7 @@ const VegaVault = (props) => {
 		console.log("Shared: " + selectedID);
 		console.log(document.getElementById('usernameShare').value);
 		sharesecret(selectedID, document.getElementById('usernameShare').value, user.jwt);
+		document.getElementById('usernameShare').value = null;
 	}
 
 	var page;

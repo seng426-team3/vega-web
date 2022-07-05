@@ -53,7 +53,7 @@ describe("Users must be able to fetch their secrets, use CRUD operations on them
         await driver.get(reactAppURL + "vega-vault");
 
         // Then
-        const refresh_button = await getElementByXpath(driver, "//*[@id=\"button-box\"]/button[5]");
+        const refresh_button = await getElementByXpath(driver, "//*[@id=\"button-box\"]/button[1]");
         await refresh_button.click();
 
         const secret_entry = await getElementByXpath(driver, "//*[@id=\"root\"]/div/div[1]/div[2]/div[2]/div/div/div/div/div[1]/div[2]/div[3]/div[2]/div/div/div/div[1]");
@@ -77,6 +77,13 @@ describe("Users must be able to fetch their secrets, use CRUD operations on them
 
         // Then
         // TO-DO write creation test
+        const refresh_button = await getElementByXpath(driver, "//*[@id=\"button-box\"]/button[1]");
+        await refresh_button.click();
+
+        const secret_entry = await getElementByXpath(driver, "//*[@id=\"root\"]/div/div[1]/div[2]/div[2]/div/div/div/div/div[1]/div[2]/div[3]/div[2]/div/div/div/div[1]");
+        const secret_name = await secret_entry.getText();
+
+        await expect(secret_name).toEqual("Super Secret");
     });
 
     /*
@@ -111,7 +118,7 @@ describe("Users must be able to fetch their secrets, use CRUD operations on them
         await upload_button.click();
 
         // Back to Vega Vault page
-        const refresh_button = await getElementByXpath(driver, "//*[@id=\"button-box\"]/button[5]");
+        const refresh_button = await getElementByXpath(driver, "//*[@id=\"button-box\"]/button[1]");
         await refresh_button.click();
         await refresh_button.click();
 

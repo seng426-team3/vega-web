@@ -18,7 +18,7 @@ const EditSecretForm = (props) => {
     const testUpload = () => {
         console.log(document.getElementById('secretFile').files[0]);
         console.log(document.getElementById('secretName').value);
-        console.log(secretId);
+        // console.log(secretId);
 
         // updatesecret(secretId, document.getElementById('secretFile').files[0], document.getElementById('secretName').value, user.jwt);
 
@@ -30,11 +30,6 @@ const EditSecretForm = (props) => {
     var page =
         <SimplePageLayout>
             <h1>Edit Secret</h1>
-            <select>
-                {options.map((option) =>(
-                    <option value={option.value}>{option.label}</option>
-                ))}
-            </select>
 
             <form action="" method="get">
                 <div>Secret Name:</div>
