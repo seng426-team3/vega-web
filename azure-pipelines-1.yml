@@ -27,6 +27,7 @@ stages:
   jobs:
     - job: SonarQube
       displayName: SonarQube Analysis
+      continueOnError: true
       steps:
       - task: SonarQubePrepare@5
         inputs:
