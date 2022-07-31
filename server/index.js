@@ -9,14 +9,17 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import news from './controller/NewsController.js';
 import contactus from './controller/ContactUsController.js';
+import helmet from 'helmet';
 
 const app = express();
 const port = 8000;
 const env = config();
 
+app.use(helmet());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json({limit: '50mb'}));
+app.disable('x-powered-by');
 
 if (process.env.NODE_ENV === 'development') {
   var corsOptions = {
