@@ -10,7 +10,9 @@ const firefox = require('selenium-webdriver/firefox');
 let driver;
 
 // Use the same email across tests
-const email = 'tester'+ Math.random()+  '@venus.com';
+const crypto = require('crypto');
+const buf = crypto.randomBytes(1)
+const email = 'tester' + buf[0] +  '@venus.com';
 
 /*
     The selenium tests here are described as new user stories in the milestone 3 report.
