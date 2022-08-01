@@ -52,7 +52,7 @@ const Login = (props) => {
       		<Col className="mx-auto" xs={6}>
 					{ unsuccessfulLogin && 
 						<Alert id="failed-login-alert" key="failed-login-alert" variant="danger">
-							Invalid username and/or password. Attempt #{loginAttempts} failed to login...
+							Invalid username and/or password. failed to login... <br/> Number of attempts remaining: {3-loginAttempts}
 							<hr/>
 							<div className="d-flex justify-content-end">
 								<Button onClick={() => setUnsuccessfulLogin(false)} variant="outline-danger">
@@ -63,7 +63,7 @@ const Login = (props) => {
 					}
 					{ invalidUser && 
 						<Alert id="invalid-user-alert" key="invalid-user-alert" variant="warning">
-							User account is still under review. Attempt #{loginAttempts} Please try again later.
+							Invalid username and/or password. failed to login... <br/> Number of attempts remaining: {3-loginAttempts}
 							<hr/>
 							<div className="d-flex justify-content-end">
 								<Button onClick={() => setInvalidUser(false)} variant="outline-warning">

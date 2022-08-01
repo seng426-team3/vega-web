@@ -35,7 +35,7 @@ const LoginUser = ({onSubmit}) => {
 	        			<Form.Label>PASSWORD</Form.Label>
 	        			<Form.Control type="PASSWORD" id="login-form-password" onChange={e => setPassword(e.target.value)}/>
 	      			</Form.Group>
-	      			<Button disabled={loginAttempt > 0} id="login-form-submit-button" variant="primary" type="submit" onClick={submitForm}>
+	      			<Button disabled={loginAttempt > 0} id="login-form-submit-button" variant="primary" type="submit" onClick={submitForm}> {/*number of actual login attempts is target - 2*/}
 	        			Submit
 							</Button>{' '}
 							<Button variant="outline-primary" href="/signup">Sign Up</Button> 
