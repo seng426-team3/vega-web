@@ -12,6 +12,7 @@ import contactus from './controller/ContactUsController.js';
 import helmet from 'helmet';
 
 const app = express();
+app.disable("x-powered-by");
 const port = 8000;
 const env = config();
 

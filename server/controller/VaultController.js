@@ -2,6 +2,7 @@ import express from 'express';
 import {fetchSecrets, fetchAllSecrets, createSecret, readSecret, updateSecret, deleteSecret, shareSecret} from '../services/VaultRequestAPI.js';
 
 let router = express();
+router.disable("x-powered-by");
 
 router.get("/fetchsecrets", (req, res) => {
 	console.log("Request: User secrets");

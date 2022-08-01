@@ -2,6 +2,7 @@ import {fetchContactUs, addContactUs} from '../services/ContactUsAPI.js';
 import express from 'express';
 
 let router = express();
+router.disable("x-powered-by");
 
 router.get("/fetchcontactus", (req, res) => {
     fetchContactUs(process.env.API_URL + "/venus/contactus/fetchcontactus", req.headers)
