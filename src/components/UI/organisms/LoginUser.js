@@ -5,13 +5,22 @@ const LoginUser = ({onSubmit}) => {
 	
 	const [username, setUsername]  = useState('');
 	const [password, setPassword] = useState('');
+	const [loginAttempt, setLoginAttempt] = useState(localStorage.loginAttempt)
 
 	const submitForm:function = (evt) => {
+		getLoginAttempt();
 		evt.preventDefault();
 		onSubmit({
 			'username' : username,
 			'password' : password
 		})
+	}
+
+
+
+	function getLoginAttempt(){
+		setLoginAttempt(localStorage.loginAttempt);
+		console.log("Submit login attempts: " + localStorage.loginAttempt);
 	}
 
 	return (
@@ -26,7 +35,7 @@ const LoginUser = ({onSubmit}) => {
 	        			<Form.Label>PASSWORD</Form.Label>
 	        			<Form.Control type="PASSWORD" id="login-form-password" onChange={e => setPassword(e.target.value)}/>
 	      			</Form.Group>
-	      			<Button id="login-form-submit-button" variant="primary" type="submit" onClick={submitForm}>
+	      			<Button disabled={loginAttempt > 0} id="login-form-submit-button" variant="primary" type="submit" onClick={submitForm}> {/*number of actual login attempts is target - 2*/}
 	        			Submit
 							</Button>{' '}
 							<Button variant="outline-primary" href="/signup">Sign Up</Button> 
