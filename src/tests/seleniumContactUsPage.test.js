@@ -10,7 +10,9 @@ const firefox = require('selenium-webdriver/firefox');
 let driver;
 
 // Use the same email across tests
-const email = 'tester'+ Math.random()+  '@venus.com';
+const crypto = require('crypto');
+const buf = crypto.randomBytes(1)
+const email = 'tester' + buf[0] + '@venus.com';
 const name = 'Test User';
 const message = 'Testing Contact-Us Submission';
 

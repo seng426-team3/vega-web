@@ -2,6 +2,7 @@ import {addNews, fetchNews, deleteNews, editNews} from '../services/NewsAPI.js';
 import express from 'express';
 
 let router = express();
+router.disable("x-powered-by");
 
 router.get("/fetchnews", (req, res) => {
     fetchNews(process.env.API_URL + "/venus/news/fetchnews", req.headers)

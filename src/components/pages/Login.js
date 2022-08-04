@@ -1,4 +1,4 @@
-import {useState, useContext} from 'react';
+import React, {useState, useContext} from 'react';
 import UserRegistrationPageLayout from '../templates/UserRegistrationPageLayout.js';
 import LoginUser from '../UI/organisms/LoginUser.js';
 import {login} from '../../service/auth/AuthenticationManager.js';
@@ -14,8 +14,10 @@ const Login = (props) => {
 	const [auth, setAuth] = useState(false);
 	const [unsuccessfulLogin, setUnsuccessfulLogin] = useState(false);
 	const [invalidUser, setInvalidUser] = useState(false);
+	const [loginAttempts, setLoginAttempts] = useState(0);
 
-
+	localStorage.loginAttempt = 0;
+	console.debug("Start Login attempts: " + localStorage.loginAttempt);
 	console.log("Userinfo", user);
 	function onSubmit(userInfo){
 		login(userInfo)
@@ -24,9 +26,15 @@ const Login = (props) => {
 
 				if (res.message === "Unauthorized") {
 					setUnsuccessfulLogin(true);
+					setLoginAttempts(loginAttempts + 1);
+					localStorage.loginAttempt = loginAttempts;
+					console.debug("Login attempts: " + localStorage.loginAttempt);
 					return;
 				} else if (res.message === "Forbidden") {
 					setInvalidUser(true);
+					setLoginAttempts(loginAttempts + 1);
+					localStorage.loginAttempt = loginAttempts;
+					console.debug("Login attempts: " + localStorage.loginAttempt);
 					return;
 				}
 
@@ -44,7 +52,7 @@ const Login = (props) => {
       		<Col className="mx-auto" xs={6}>
 					{ unsuccessfulLogin && 
 						<Alert id="failed-login-alert" key="failed-login-alert" variant="danger">
-							Invalid username and/or password, failed to login...
+							Invalid username and/or password. failed to login... <br/> Number of attempts remaining: {3-loginAttempts}
 							<hr/>
 							<div className="d-flex justify-content-end">
 								<Button onClick={() => setUnsuccessfulLogin(false)} variant="outline-danger">
@@ -55,7 +63,7 @@ const Login = (props) => {
 					}
 					{ invalidUser && 
 						<Alert id="invalid-user-alert" key="invalid-user-alert" variant="warning">
-							User account is still under review. Please try again later.
+							Invalid username and/or password. failed to login... <br/> Number of attempts remaining: {3-loginAttempts}
 							<hr/>
 							<div className="d-flex justify-content-end">
 								<Button onClick={() => setInvalidUser(false)} variant="outline-warning">
