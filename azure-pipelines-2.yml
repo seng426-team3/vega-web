@@ -98,3 +98,4 @@ stages:
         CI=true npm test
       displayName: 'npm test (Selenium testing)'
       workingDirectory: "/home/vsts/work/1/vega-web"
+      continueOnError: true
